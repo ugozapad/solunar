@@ -18,10 +18,10 @@ struct MountPointDesc
 	const char* m_path;
 };
 
-class VFS
+class VirtualFileSystem
 {
 public:
-	static VFS* getInstance();
+	static VirtualFileSystem* getInstance();
 
 public:
 	void mount(const MountPointDesc& mountDesc);

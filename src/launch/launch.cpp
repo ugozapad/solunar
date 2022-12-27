@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 #endif // WIN32
 
 	// Mount root filesystem
-	VFS::getInstance()->mount("/", g_fileSystem);
+	VirtualFileSystem::getInstance()->mount("/", g_fileSystem);
 
 	// Create window
 	GLFWwindow* window = glfwCreateWindow(1280, 720, "Solunar Engine", nullptr, nullptr);

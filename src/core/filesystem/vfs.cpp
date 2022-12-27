@@ -4,18 +4,18 @@
 namespace solunar
 {
 
-VFS* VFS::getInstance()
+VirtualFileSystem* VirtualFileSystem::getInstance()
 {
-	static VFS instance;
+	static VirtualFileSystem instance;
 	return &instance;
 }
 
-void VFS::mount(const MountPointDesc& mountDesc)
+void VirtualFileSystem::mount(const MountPointDesc& mountDesc)
 {
 	m_mountingPoints.push_back(mountDesc);
 }
 
-void VFS::mount(const char* path, IFileSystem* filesystem)
+void VirtualFileSystem::mount(const char* path, IFileSystem* filesystem)
 {
 	MountPointDesc mountingDesc;
 	memset(&mountingDesc, 0, sizeof(mountingDesc));
@@ -24,7 +24,7 @@ void VFS::mount(const char* path, IFileSystem* filesystem)
 	mount(mountingDesc);
 }
 
-bool VFS::fileExist(const std::string& filename)
+bool VirtualFileSystem::fileExist(const std::string& filename)
 {
 	if (MountPointDesc* mountPoint = getMountingPoint(filename))
 	{
@@ -34,7 +34,7 @@ bool VFS::fileExist(const std::string& filename)
 	return false;
 }
 
-IFile* VFS::openFile(const std::string& filename)
+IFile* VirtualFileSystem::openFile(const std::string& filename)
 {
 	if (MountPointDesc* mountPoint = getMountingPoint(filename))
 	{
@@ -44,7 +44,7 @@ IFile* VFS::openFile(const std::string& filename)
 	return nullptr;
 }
 
-MountPointDesc* VFS::getMountingPoint(const std::string& filename)
+MountPointDesc* VirtualFileSystem::getMountingPoint(const std::string& filename)
 {
 	// Try to find mouting point name.
 	size_t beginPathLocation = filename.find_first_of('/');
