@@ -1,5 +1,5 @@
-#ifndef CORE_REFLECTION_H
-#define CORE_REFLECTION_H
+#ifndef CORE_REFLECTION_TYPEINFO_H
+#define CORE_REFLECTION_TYPEINFO_H
 
 namespace solunar
 {
