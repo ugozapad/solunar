@@ -1,2 +1,1 @@
-# solunar2
-solunar
+# solunar
