@@ -4,6 +4,8 @@
 #include "render/buffer.h"
 #include "render/texture.h"
 
+struct GLFWwindow;
+
 namespace solunar
 {
 
@@ -32,6 +34,8 @@ public:
 };
 
 extern IRenderer* g_renderer;
+
+IRenderer* createGLRenderer(GLFWwindow* window);
 
 }
 
