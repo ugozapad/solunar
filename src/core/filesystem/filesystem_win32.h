@@ -13,11 +13,11 @@
 namespace solunar
 {
 
-class StdFile : public IFile
+class FileWin32 : public IFile
 {
 public:
-	StdFile(const char* filename, bool read);
-	~StdFile();
+	FileWin32(const char* filename, bool read);
+	~FileWin32();
 
 	size_t read(void* buffer, size_t size) override;
 	size_t write(void* buffer, size_t size) override;

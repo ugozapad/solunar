@@ -8,13 +8,13 @@ namespace solunar
 
 static int s_stdioSeekDir[] = { SEEK_SET, SEEK_CUR, SEEK_END };
 
-StdFile::StdFile(const char* filename, bool read)
+FileWin32::FileWin32(const char* filename, bool read)
 {
 	m_file = fopen(filename, (read == true) ? "rb" : "wb");
 	//m_file.open(filename, (read == true) ? std::ios_base::in : std::ios_base::out);
 }
 
-StdFile::~StdFile()
+FileWin32::~FileWin32()
 {
 	if (m_file)
 	{
@@ -23,27 +23,27 @@ StdFile::~StdFile()
 	}
 }
 
-size_t StdFile::read(void* buffer, size_t size)
+size_t FileWin32::read(void* buffer, size_t size)
 {
 	return fread(buffer, 1, size, m_file);
 }
 
-size_t StdFile::write(void* buffer, size_t size)
+size_t FileWin32::write(void* buffer, size_t size)
 {
 	return fwrite(buffer, 1, size, m_file);
 }
 
-size_t StdFile::tell()
+size_t FileWin32::tell()
 {
 	return ftell(m_file);
 }
 
-void StdFile::seek(size_t offset, FileSeek fileseek)
+void FileWin32::seek(size_t offset, FileSeek fileseek)
 {
 	fseek(m_file, (long)offset, s_stdioSeekDir[(int)fileseek]);
 }
 
-void StdFile::flush()
+void FileWin32::flush()
 {
 	fflush(m_file);
 }
@@ -80,7 +80,7 @@ IFile* FileSystemWin32::openFile(const char* path, bool read)
 	if (read && !fileExist(path))
 		return nullptr;
 
-	return new StdFile(filepath.c_str(), read);
+	return new FileWin32(filepath.c_str(), read);
 }
 
 std::string FileSystemWin32::computePath(const char* path)
