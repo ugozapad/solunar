@@ -1,10 +1,7 @@
 #include "render/gl/glrenderer.h"
 
-#include <Windows.h>
-#include <GL/GL.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-#pragma comment(lib, "opengl32.lib")
 
 namespace solunar
 {
@@ -13,6 +10,11 @@ GLRenderer::GLRenderer(GLFWwindow* window) :
 	m_window(window)
 {
 	glfwMakeContextCurrent(window);
+
+	// Load OpenGL
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		// do something we in trouble :(((
+	}
 }
 
 GLRenderer::~GLRenderer()

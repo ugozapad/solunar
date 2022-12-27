@@ -20,4 +20,4 @@ add_library(render STATIC
 
 target_include_directories(render PRIVATE "${CMAKE_SOURCE_DIR}/src")
 
-target_link_libraries(render glfw)
+target_link_libraries(render glfw glad)
