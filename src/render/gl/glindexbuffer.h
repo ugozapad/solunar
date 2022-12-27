@@ -1,20 +1,28 @@
-#ifndef INDEXOBJECT_H
-#define INDEXOBJECT_H
+#ifndef RENDER_GL_GLINDEXBUFFER_H
+#define RENDER_GL_GLINDEXBUFFER_H
 
-class Render;
+#include "render/buffer.h"
 
-class ENGINE_API IndexBuffer
+namespace solunar
 {
-	friend class Render;
+
+class GLIndexBuffer : public IBuffer
+{
 public:
-	~IndexBuffer();
+	GLIndexBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc);
+	~GLIndexBuffer();
 
 	void bind();
 
-private:
-	IndexBuffer(void* data, size_t size, bool isStream = false);
+	void* map(BufferMapping mapping) override;
+	void unmap() override;
 
+	void updateSubresource(void* data) override;
+
+private:
 	uint32_t m_buffer;
 };
+
+}
 
 #endif // !INDEXOBJECT_H

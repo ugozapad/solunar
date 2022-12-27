@@ -1,6 +1,5 @@
 #include "render/gl/glvertexbuffer.h"
-
-#include <glad/glad.h>
+#include "render/gl/glshared.h"
 
 namespace solunar
 {
@@ -10,6 +9,7 @@ GLVertexBuffer::GLVertexBuffer(const BufferDesc& bufferDesc, const SubresourceDe
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 	//glBufferData(GL_ARRAY_BUFFER, size, data, isStream ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, bufferDesc.m_bufferMemorySize, subresourceDesc.m_memory, getBufferAccess(bufferDesc.m_bufferAccess));
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -25,22 +25,7 @@ void GLVertexBuffer::bind()
 
 void* GLVertexBuffer::map(BufferMapping mapping)
 {
-	GLenum accessGl = 0;
-
-	switch (access)
-	{
-	case BufferMapping_Read:
-		accessGl = GL_READ_ONLY;
-		break;
-	case BufferMapping_Write:
-		accessGl = GL_WRITE_ONLY;
-		break;
-	case BufferMapping_WriteDiscard:
-		accessGl = GL_READ_WRITE;
-		break;
-	}
-
-	void* ptr = glMapBuffer(GL_ARRAY_BUFFER, accessGl);
+	void* ptr = glMapBuffer(GL_ARRAY_BUFFER, getBufferMapping(mapping));
 	return ptr;
 }
 
