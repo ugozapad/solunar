@@ -1,12 +1,12 @@
 #ifndef RENDER_GL_GLVERTEXBUFFER_H
 #define RENDER_GL_GLVERTEXBUFFER_H
 
-#include "render/buffer.h"
+#include "render/gl/glshared.h"
 
 namespace solunar
 {
 
-class GLVertexBuffer : public IBuffer
+class GLVertexBuffer : public IGLBufferBase
 {
 public:
 	GLVertexBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc);

@@ -1,7 +1,9 @@
-#include "render/gl/glrenderer.h"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "render/gl/glrenderer.h"
+#include "render/gl/glvertexbuffer.h"
+#include "render/gl/glindexbuffer.h"
 
 namespace solunar
 {
@@ -42,15 +44,36 @@ void GLRenderer::endFrame()
 
 IBuffer* GLRenderer::createBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc)
 {
+	switch (bufferDesc.m_bufferType)
+	{
+	case BufferType_VertexBuffer:
+		return new GLVertexBuffer(bufferDesc, subresourceDesc);
+	case BufferType_IndexBuffer:
+		return new GLIndexBuffer(bufferDesc, subresourceDesc);
+	case BufferType_ConstantBuffer:
+		break;
+	default:
+		break;
+	}
 	return nullptr;
 }
 
 void GLRenderer::setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offset)
 {
+	IGLBufferBase* bufferBase = (IGLBufferBase*)buffer;
+	if (bufferBase)
+		bufferBase->bind();
+	else
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void GLRenderer::setIndexBuffer(IBuffer* buffer)
 {
+	IGLBufferBase* bufferBase = (IGLBufferBase*)buffer;
+	if (bufferBase)
+		bufferBase->bind();
+	else
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 IRenderer* createGLRenderer(GLFWwindow* window)

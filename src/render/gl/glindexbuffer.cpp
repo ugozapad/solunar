@@ -1,5 +1,4 @@
 #include "render/gl/glindexbuffer.h"
-#include "render/gl/glshared.h"
 
 namespace solunar
 {

@@ -1,5 +1,4 @@
 #include "render/gl/glvertexbuffer.h"
-#include "render/gl/glshared.h"
 
 namespace solunar
 {

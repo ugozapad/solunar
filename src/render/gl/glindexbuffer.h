@@ -1,12 +1,12 @@
 #ifndef RENDER_GL_GLINDEXBUFFER_H
 #define RENDER_GL_GLINDEXBUFFER_H
 
-#include "render/buffer.h"
+#include "render/gl/glshared.h"
 
 namespace solunar
 {
 
-class GLIndexBuffer : public IBuffer
+class GLIndexBuffer : public IGLBufferBase
 {
 public:
 	GLIndexBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc);
