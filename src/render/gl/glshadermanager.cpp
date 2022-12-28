@@ -77,5 +77,4 @@ void GLShaderManager::deleteProgram(GLShaderProgram* program)
 	}
 }
 
-
 }

@@ -6,6 +6,20 @@
 namespace solunar
 {
 
+enum GLRenderFeature
+{
+	GLRenderFeature_None,
+	GLRenderFeature_ARBDSA,
+	GLRenderFeature_EXTDSA,
+};
+
+enum GLShaderFeature
+{
+	GLShaderFeature_None,
+	GLShaderFeature_EXTSeparated,
+	GLShaderFeature_ARBSeparated,
+};
+
 class GLRenderer : public IRenderer
 {
 public:
@@ -23,7 +37,12 @@ public:
 	void setIndexBuffer(IBuffer* buffer) override;
 
 private:
+	void initRenderFeatures();
+
+private:
 	GLFWwindow* m_window;
+	GLRenderFeature m_renderFeature;
+	GLShaderFeature m_separatedShaderObjects;
 };
 
 }
