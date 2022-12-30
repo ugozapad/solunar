@@ -39,6 +39,8 @@ public:
 private:
 	void initRenderFeatures();
 
+	bool findExtension(const char* name);
+
 private:
 	GLFWwindow* m_window;
 	GLRenderFeature m_renderFeature;

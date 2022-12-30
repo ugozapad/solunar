@@ -85,25 +85,14 @@ void GLRenderer::setIndexBuffer(IBuffer* buffer)
 
 void GLRenderer::initRenderFeatures()
 {
-	GLint extensionCount = 0;
-	glGetIntegerv(GL_NUM_EXTENSIONS, &extensionCount);
-
 	//////////////////////////////////////////////////////////////////////////
 	// Direct State Access
 
-	// Try to find EXT_direct_state_access
-	for (int i = 0; i < extensionCount; i++) {
-		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
-		if (strcmp(extension, "GL_EXT_direct_state_access") == 0)
-			m_renderFeature = GLRenderFeature_EXTDSA;
-	}
-
-	// Try to find ARB_direct_state_access
-	for (int i = 0; i < extensionCount; i++) {
-		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
-		if (strcmp(extension, "GL_ARB_direct_state_access") == 0)
-			m_renderFeature = GLRenderFeature_ARBDSA;
-	}
+	// Try to find EXT_direct_state_access or ARB_direct_state_access
+	if (findExtension("GL_EXT_direct_state_access"))
+		m_renderFeature = GLRenderFeature_EXTDSA;
+	if (findExtension("GL_ARB_direct_state_access"))
+		m_renderFeature = GLRenderFeature_ARBDSA;
 
 	// log what we found
 	if (m_renderFeature == GLRenderFeature_ARBDSA)
@@ -116,19 +105,11 @@ void GLRenderer::initRenderFeatures()
 	//////////////////////////////////////////////////////////////////////////
 	// Separated shader objects
 
-	// Try to find EXT_separate_shader_objects
-	for (int i = 0; i < extensionCount; i++) {
-		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
-		if (strcmp(extension, "GL_EXT_separate_shader_objects") == 0)
-			m_separatedShaderObjects = GLShaderFeature_EXTSeparated;
-	}
-
-	// Try to find ARB_separate_shader_objects
-	for (int i = 0; i < extensionCount; i++) {
-		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
-		if (strcmp(extension, "GL_ARB_separate_shader_objects") == 0)
-			m_separatedShaderObjects = GLShaderFeature_ARBSeparated;
-	}
+	// Try to find EXT_separate_shader_objects or ARB_separate_shader_objects
+	if (findExtension("GL_EXT_separate_shader_objects"))
+		m_separatedShaderObjects = GLShaderFeature_EXTSeparated;
+	if (findExtension("GL_ARB_separate_shader_objects"))
+		m_separatedShaderObjects = GLShaderFeature_ARBSeparated;
 
 	// log what we found
 	if (m_separatedShaderObjects == GLShaderFeature_ARBSeparated)
@@ -137,6 +118,20 @@ void GLRenderer::initRenderFeatures()
 		printf("found EXT_separate_shader_objects\n");
 	else
 		printf("not found any separated shader objects extension\n");
+}
+
+bool GLRenderer::findExtension(const char* name)
+{
+	GLint extensionCount = 0;
+	glGetIntegerv(GL_NUM_EXTENSIONS, &extensionCount);
+
+	for (int i = 0; i < extensionCount; i++) {
+		const char* extension = (const char*)glGetStringi(GL_EXTENSIONS, i);
+		if (strcmp(extension, name) == 0)
+			return true;
+	}
+
+	return false;
 }
 
 IRenderer* createGLRenderer(GLFWwindow* window)
