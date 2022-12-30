@@ -1,0 +1,16 @@
+# Global attributes for forcing line endings normalization of specific files
+
+* text=auto
+
+# Sources
+*.c   text eol=lf encoding=utf-8
+*.cpp text eol=lf encoding=utf-8
+*.h   text eol=lf encoding=utf-8
+*.hpp text eol=lf encoding=utf-8
+*.inl text eol=lf encoding=utf-8
+
+# Configs
+CMakeLists.txt text eol=lf encoding=utf-8
+
+# Documents
+*.md text eol=lf encoding=utf-8
