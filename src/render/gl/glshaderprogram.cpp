@@ -8,7 +8,24 @@
 namespace solunar
 {
 
-GLuint createShader(GLenum target, const char* filename, const char* defines = nullptr)
+GLuint createShaderFromText(GLenum target, const char* text)
+{
+	GLuint shader = glCreateShader(target);
+	glShaderSource(shader, 1, &text, NULL);
+	glCompileShader(shader);
+
+	int  success;
+	char infoLog[512];
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(shader, 512, NULL, infoLog);
+		printf("createShaderFromText: failed to compile shader %s\n", infoLog);
+	}
+
+	return shader;
+}
+
+GLuint createShaderFromFile(GLenum target, const char* filename, const char* defines = nullptr)
 {
 	std::string content;
 
@@ -65,8 +82,8 @@ GLShaderProgram::GLShaderProgram(const char* name, const char* vsfilename, const
 	m_file_name = strdup(name);
 	m_defines = nullptr;
 
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vsfilename);
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fsfilename);
+	GLuint vertexShader = createShaderFromFile(GL_VERTEX_SHADER, vsfilename);
+	GLuint fragmentShader = createShaderFromFile(GL_FRAGMENT_SHADER, fsfilename);
 
 	m_program = glCreateProgram();
 	glAttachShader(m_program, vertexShader);
@@ -90,8 +107,8 @@ GLShaderProgram::GLShaderProgram(const char* name, const char* vsfilename, const
 	m_file_name = strdup(name);
 	m_defines = strdup(defines);
 
-	GLuint vertexShader = createShader(GL_VERTEX_SHADER, vsfilename, defines);
-	GLuint fragmentShader = createShader(GL_FRAGMENT_SHADER, fsfilename, defines);
+	GLuint vertexShader = createShaderFromFile(GL_VERTEX_SHADER, vsfilename, defines);
+	GLuint fragmentShader = createShaderFromFile(GL_FRAGMENT_SHADER, fsfilename, defines);
 
 	m_program = glCreateProgram();
 	glAttachShader(m_program, vertexShader);
@@ -107,6 +124,28 @@ GLShaderProgram::GLShaderProgram(const char* name, const char* vsfilename, const
 	if (!success) {
 		glGetProgramInfoLog(m_program, 512, NULL, infoLog);
 		//Core::error("ShaderProgram::ShaderProgram: failed to link program %s", infoLog);
+	}
+}
+
+GLShaderProgram::GLShaderProgram(const char* vstext, const char* pstext)
+{
+	GLuint vertexShader = createShaderFromText(GL_VERTEX_SHADER, vstext);
+	GLuint fragmentShader = createShaderFromText(GL_FRAGMENT_SHADER, pstext);
+
+	m_program = glCreateProgram();
+	glAttachShader(m_program, vertexShader);
+	glAttachShader(m_program, fragmentShader);
+	glLinkProgram(m_program);
+
+	glDeleteShader(fragmentShader);
+	glDeleteShader(vertexShader);
+
+	int  success;
+	char infoLog[512];
+	glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(m_program, 512, NULL, infoLog);
+		printf("GLShaderProgram::GLShaderProgram: failed to link program %s\n", infoLog);
 	}
 }
 

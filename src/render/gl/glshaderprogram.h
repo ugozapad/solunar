@@ -1,6 +1,7 @@
 #ifndef RENDER_GL_GLSHADERPROGRAM_H
 #define RENDER_GL_GLSHADERPROGRAM_H
 
+#include "render/ishaderprogram.h"
 #include "render/gl/glshared.h"
 
 namespace solunar
@@ -8,12 +9,15 @@ namespace solunar
 
 class GLShaderManager;
 
-class GLShaderProgram
+class GLShaderProgram : public IShaderProgram
 {
 	friend class GLShaderManager;
 public:
 	GLShaderProgram(const char* name, const char* vsfilename, const char* fsfilename);
 	GLShaderProgram(const char* name, const char* vsfilename, const char* fsfilename, const char* defines);
+
+	GLShaderProgram(const char* vstext, const char* pstext);
+
 	~GLShaderProgram();
 
 	//////////////////////////////////////////////////////////////////////////

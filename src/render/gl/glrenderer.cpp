@@ -7,6 +7,8 @@
 #include "render/gl/glrenderer.h"
 #include "render/gl/glvertexbuffer.h"
 #include "render/gl/glindexbuffer.h"
+#include "render/gl/glshadermanager.h"
+#include "render/gl/glshaderprogram.h"
 
 namespace solunar
 {
@@ -81,6 +83,20 @@ void GLRenderer::setIndexBuffer(IBuffer* buffer)
 		bufferBase->bind();
 	else
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+IShaderProgram* GLRenderer::createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const ShaderInputLayout& inputLayout)
+{
+	return new GLShaderProgram((const char*)vertexShaderDesc.m_bytecode, (const char*)pixelShaderDesc.m_bytecode);
+}
+
+void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)
+{
+	GLShaderProgram* glshaderProgram = (GLShaderProgram*)shaderProgram;
+	if (glshaderProgram)
+		GLShaderManager::setShaderProgram(glshaderProgram);
+	else
+		GLShaderManager::setShaderProgram(nullptr);
 }
 
 void GLRenderer::initRenderFeatures()

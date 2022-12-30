@@ -36,6 +36,9 @@ public:
 	void setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offset) override;
 	void setIndexBuffer(IBuffer* buffer) override;
 
+	IShaderProgram* createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const ShaderInputLayout& inputLayout) override;
+	void setShaderProgram(IShaderProgram* shaderProgram) override;
+
 private:
 	void initRenderFeatures();
 
