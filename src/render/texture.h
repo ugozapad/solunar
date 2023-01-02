@@ -12,6 +12,7 @@ enum PixelFormat
 
 	// Usigned char formats
 	PixelFormat_R8,
+	PixelFormat_RGB8,
 	PixelFormat_RGBA8,
 
 	PixelFormat_Max

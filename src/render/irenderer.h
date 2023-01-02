@@ -34,7 +34,7 @@ public:
 	//virtual void setVSConstantBuffer(uint32_t slot, IBuffer* buffer) = 0;
 	//virtual void setPSConstantBuffer(uint32_t slot, IBuffer* buffer) = 0;
 
-	//virtual ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) = 0;
+	virtual ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) = 0;
 };
 
 extern IRenderer* g_renderer;

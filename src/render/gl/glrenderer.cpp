@@ -9,6 +9,7 @@
 #include "render/gl/glindexbuffer.h"
 #include "render/gl/glshadermanager.h"
 #include "render/gl/glshaderprogram.h"
+#include "render/gl/gltexture2d.h"
 
 namespace solunar
 {
@@ -97,6 +98,11 @@ void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)
 		GLShaderManager::setShaderProgram(glshaderProgram);
 	else
 		GLShaderManager::setShaderProgram(nullptr);
+}
+
+ITexture2D* GLRenderer::createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc)
+{
+	return new GLTexture2D(textureDesc, subresourceDesc);
 }
 
 void GLRenderer::initRenderFeatures()

@@ -39,6 +39,8 @@ public:
 	IShaderProgram* createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const ShaderInputLayout& inputLayout) override;
 	void setShaderProgram(IShaderProgram* shaderProgram) override;
 
+	ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) override;
+
 private:
 	void initRenderFeatures();
 
