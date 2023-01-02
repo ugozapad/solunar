@@ -17,7 +17,8 @@ namespace solunar
 GLRenderer::GLRenderer(GLFWwindow* window) :
 	m_window(window),
 	m_renderFeature(GLRenderFeature_None),
-	m_separatedShaderObjects(GLShaderFeature_None)
+	m_separatedShaderObjects(GLShaderFeature_None),
+	m_primitiveMode(0)
 {
 	glfwMakeContextCurrent(window);
 
@@ -50,6 +51,17 @@ void GLRenderer::beginFrame()
 void GLRenderer::endFrame()
 {
 	glfwSwapBuffers(m_window);
+}
+
+void GLRenderer::draw(uint32_t verticesCount, uint32_t startVertexLocation)
+{
+	glDrawArrays(m_primitiveMode, startVertexLocation, verticesCount);
+}
+
+void GLRenderer::setPrimitiveMode(PrimitiveMode primitiveMode)
+{
+	if (primitiveMode == PrimitiveMode_TriangleList)
+		m_primitiveMode = GL_TRIANGLES;
 }
 
 IBuffer* GLRenderer::createBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc)

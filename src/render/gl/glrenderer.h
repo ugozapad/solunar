@@ -32,6 +32,9 @@ public:
 	void beginFrame() override;
 	void endFrame() override;
 
+	void draw(uint32_t verticesCount, uint32_t startVertexLocation) override;
+	void setPrimitiveMode(PrimitiveMode primitiveMode) override;
+
 	IBuffer* createBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc) override;
 	void setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offset) override;
 	void setIndexBuffer(IBuffer* buffer) override;
@@ -50,6 +53,7 @@ private:
 	GLFWwindow* m_window;
 	GLRenderFeature m_renderFeature;
 	GLShaderFeature m_separatedShaderObjects;
+	GLenum m_primitiveMode;
 };
 
 }
