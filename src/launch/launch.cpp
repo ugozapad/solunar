@@ -40,6 +40,9 @@ int main(int argc, char* argv[])
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
+	// Disable window resize
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
 	// Create window
 	GLFWwindow* window = glfwCreateWindow(1280, 720, "Solunar Engine", nullptr, nullptr);
 	if (!window)
