@@ -39,7 +39,7 @@ public:
 	void setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offset) override;
 	void setIndexBuffer(IBuffer* buffer) override;
 
-	IShaderProgram* createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const ShaderInputLayout& inputLayout) override;
+	IShaderProgram* createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const std::vector<ShaderInputLayout>& inputLayouts) override;
 	void setShaderProgram(IShaderProgram* shaderProgram) override;
 
 	ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) override;
@@ -54,6 +54,8 @@ private:
 	GLRenderFeature m_renderFeature;
 	GLShaderFeature m_separatedShaderObjects;
 	GLenum m_primitiveMode;
+
+	GLuint m_vertexArraysObject;
 };
 
 }

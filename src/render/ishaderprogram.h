@@ -18,7 +18,7 @@ struct ShaderCreationDesc
 {
 	ShaderType m_shaderType;
 	const void* m_bytecode;
-	const size_t m_bytecodeLength;
+	size_t m_bytecodeLength;
 };
 
 enum InputType
@@ -28,6 +28,7 @@ enum InputType
 	InputType_Vec2,
 	InputType_Vec3,
 	InputType_Vec4,
+	InputType_MAX,
 };
 
 struct ShaderInputLayout

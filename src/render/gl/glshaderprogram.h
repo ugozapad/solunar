@@ -1,6 +1,8 @@
 #ifndef RENDER_GL_GLSHADERPROGRAM_H
 #define RENDER_GL_GLSHADERPROGRAM_H
 
+#include <vector>
+
 #include "render/ishaderprogram.h"
 #include "render/gl/glshared.h"
 
@@ -13,11 +15,7 @@ class GLShaderProgram : public IShaderProgram
 {
 	friend class GLShaderManager;
 public:
-	GLShaderProgram(const char* name, const char* vsfilename, const char* fsfilename);
-	GLShaderProgram(const char* name, const char* vsfilename, const char* fsfilename, const char* defines);
-
-	GLShaderProgram(const char* vstext, const char* pstext);
-
+	GLShaderProgram(const char* vstext, const char* pstext, const std::vector<ShaderInputLayout>& inputLayouts);
 	~GLShaderProgram();
 
 	//////////////////////////////////////////////////////////////////////////
@@ -34,6 +32,8 @@ public:
 	uint32_t getUniformLocation(const char* uniform_name);
 
 private:
+	std::vector<ShaderInputLayout> m_shaderInputLayout;
+
 	const char* m_file_name;
 	const char* m_defines;
 	uint32_t m_program;

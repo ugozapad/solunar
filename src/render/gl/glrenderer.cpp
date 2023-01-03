@@ -18,7 +18,8 @@ GLRenderer::GLRenderer(GLFWwindow* window) :
 	m_window(window),
 	m_renderFeature(GLRenderFeature_None),
 	m_separatedShaderObjects(GLShaderFeature_None),
-	m_primitiveMode(0)
+	m_primitiveMode(0),
+	m_vertexArraysObject(0)
 {
 	glfwMakeContextCurrent(window);
 
@@ -28,10 +29,15 @@ GLRenderer::GLRenderer(GLFWwindow* window) :
 	}
 
 	initRenderFeatures();
+
+	glGenVertexArrays(1, &m_vertexArraysObject);
+	glBindVertexArray(m_vertexArraysObject);
 }
 
 GLRenderer::~GLRenderer()
 {
+	glBindVertexArray(0);
+	glDeleteVertexArrays(1, &m_vertexArraysObject);	
 }
 
 void GLRenderer::initialize()
@@ -98,9 +104,9 @@ void GLRenderer::setIndexBuffer(IBuffer* buffer)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-IShaderProgram* GLRenderer::createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const ShaderInputLayout& inputLayout)
+IShaderProgram* GLRenderer::createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const std::vector<ShaderInputLayout>& inputLayouts)
 {
-	return new GLShaderProgram((const char*)vertexShaderDesc.m_bytecode, (const char*)pixelShaderDesc.m_bytecode);
+	return new GLShaderProgram((const char*)vertexShaderDesc.m_bytecode, (const char*)pixelShaderDesc.m_bytecode, inputLayouts);
 }
 
 void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)

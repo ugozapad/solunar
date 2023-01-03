@@ -4,6 +4,18 @@
 namespace solunar
 {
 
+// Table for all sized of InputType
+const size_t g_inputTypeSizeTable[InputType_MAX] =
+{
+	-1, // InputType_None
+
+	1,	// InputType_Float
+	2,	// InputType_Vec2
+	3,	// InputType_Vec3
+	4	// InputType_Vec4
+};
+
+
 GLShaderManager* g_shaderManager = nullptr;
 
 void GLShaderManager::init()
@@ -17,57 +29,28 @@ void GLShaderManager::init()
 
 void GLShaderManager::shutdown()
 {
-	for (std::vector<GLShaderProgram*>::iterator it = m_programs.begin(); it != m_programs.end(); ++it) {
-		if (*it) {
-			deleteProgram(*it);
-		}
-	}
-
-	m_programs.clear();
 }
 
 void GLShaderManager::setShaderProgram(GLShaderProgram* program)
 {
+	if (program)
+	{
+		// apply vertex attributes
+		const std::vector<ShaderInputLayout>& inputLayouts = program->m_shaderInputLayout;
+		const int inputLayoutsCount = inputLayouts.size();
+		size_t appliedOffset = 0;
+		for (int i = 0; i < inputLayoutsCount; i++)
+		{
+			const ShaderInputLayout& layout = inputLayouts[i];
+			const size_t& elementSize = g_inputTypeSizeTable[layout.m_semanticType];
+
+			// #TODO: Only float now
+			glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, (elementSize * sizeof(float)) + layout.m_offset, (void*)0);
+			glEnableVertexAttribArray(i);
+		}
+	}
+
 	glUseProgram(program ? program->m_program : 0);
-}
-
-GLShaderProgram* GLShaderManager::createShaderProgram(const char* name, const char* vsfilename, const char* fsfilename)
-{
-	for (std::vector<GLShaderProgram*>::iterator it = m_programs.begin(); it != m_programs.end(); ++it) {
-		if (strcmp((*it)->m_file_name, name) == 0 && (*it)->m_defines == nullptr) {
-			return (*it);
-		}
-	}
-
-	GLShaderProgram* program = new GLShaderProgram(name, vsfilename, fsfilename);
-	m_programs.push_back(program);
-	return program;
-}
-
-GLShaderProgram* GLShaderManager::createShaderProgram(const char* name, const char* vsfilename, const char* fsfilename, const char* defines)
-{
-	for (std::vector<GLShaderProgram*>::iterator it = m_programs.begin(); it != m_programs.end(); ++it) {
-		if (strcmp((*it)->m_file_name, name) == 0 && (*it)->m_defines && strcmp((*it)->m_defines, defines) == 0) {
-			return (*it);
-		}
-	}
-
-	GLShaderProgram* program = new GLShaderProgram(name, vsfilename, fsfilename, defines);
-	m_programs.push_back(program);
-	return program;
-}
-
-GLShaderProgram* GLShaderManager::createShaderProgram(const char* name)
-{
-	for (std::vector<GLShaderProgram*>::iterator it = m_programs.begin(); it != m_programs.end(); ++it) {
-		if (strcmp((*it)->m_file_name, name) == 0) {
-			return (*it);
-		}
-	}
-
-	//Core::error("ShaderManager::createShaderProgram: failed to create shader %s, because them doesnt exist", name);
-
-	return nullptr;
 }
 
 void GLShaderManager::deleteProgram(GLShaderProgram* program)
