@@ -1,3 +1,4 @@
+#if 0
 #include <GLFW/glfw3.h>
 
 #ifdef WIN32
@@ -72,3 +73,4 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+#endif
