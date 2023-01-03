@@ -7,7 +7,6 @@ GLVertexBuffer::GLVertexBuffer(const BufferDesc& bufferDesc, const SubresourceDe
 {
 	glGenBuffers(1, &m_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
-	//glBufferData(GL_ARRAY_BUFFER, size, data, isStream ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, bufferDesc.m_bufferMemorySize, subresourceDesc.m_memory, getBufferAccess(bufferDesc.m_bufferAccess));
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
