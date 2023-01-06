@@ -111,13 +111,19 @@ int main(int argc, char* argv[])
 	// Create shader program from file
 	createShaderProg();
 	
-	// Create vertex buffer
 	float vertices[] = {
-	  -0.5f, -0.5f, 0.0f, // left  
-	   0.5f, -0.5f, 0.0f, // right 
-	   0.0f,  0.5f, 0.0f  // top   
+	 0.5f,  0.5f, 0.0f,  // top right
+	 0.5f, -0.5f, 0.0f,  // bottom right
+	-0.5f, -0.5f, 0.0f,  // bottom left
+	-0.5f,  0.5f, 0.0f   // top left 
 	};
 
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,   // first triangle
+		1, 2, 3    // second triangle
+	};
+
+	// Create vertex buffer
 	BufferDesc bd = {};
 	bd.m_bufferType = BufferType_VertexBuffer;
 	bd.m_bufferAccess = BufferAccess_Default;
@@ -127,6 +133,17 @@ int main(int argc, char* argv[])
 	sd.m_memory = vertices;
 
 	g_vertexBuffer = g_renderer->createBuffer(bd, sd);
+
+	// Create indices buffer
+	BufferDesc indicesBD = {};
+	indicesBD.m_bufferType = BufferType_IndexBuffer;
+	indicesBD.m_bufferAccess = BufferAccess_Default;
+	indicesBD.m_bufferMemorySize = sizeof(indices);
+
+	SubresourceDesc indicesSD = {};
+	indicesSD.m_memory = indices;
+
+	g_indexBuffer = g_renderer->createBuffer(indicesBD, indicesSD);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -140,8 +157,10 @@ int main(int argc, char* argv[])
 
 		g_renderer->setShaderProgram(g_shaderProgram);
 
+		g_renderer->setIndexBuffer(g_indexBuffer);
+
 		g_renderer->setPrimitiveMode(PrimitiveMode_TriangleList);
-		g_renderer->draw(3, 0);
+		g_renderer->drawIndexed(6, 0, 0);
 
 		g_renderer->endFrame();
 	}

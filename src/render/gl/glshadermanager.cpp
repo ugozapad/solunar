@@ -7,7 +7,7 @@ namespace solunar
 // Table for all sized of InputType
 const size_t g_inputTypeSizeTable[InputType_MAX] =
 {
-	-1, // InputType_None
+	0, // InputType_None
 
 	1,	// InputType_Float
 	2,	// InputType_Vec2

@@ -33,6 +33,7 @@ public:
 	void endFrame() override;
 
 	void draw(uint32_t verticesCount, uint32_t startVertexLocation) override;
+	void drawIndexed(uint32_t indicesCount, uint32_t startIndexLocation, int32_t baseVertexLocation) override;
 	void setPrimitiveMode(PrimitiveMode primitiveMode) override;
 
 	IBuffer* createBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc) override;

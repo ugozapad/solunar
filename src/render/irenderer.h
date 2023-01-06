@@ -29,6 +29,7 @@ public:
 	virtual void endFrame() = 0;
 
 	virtual void draw(uint32_t verticesCount, uint32_t startVertexLocation) = 0;
+	virtual void drawIndexed(uint32_t indicesCount, uint32_t startIndexLocation, int32_t baseVertexLocation) = 0;
 	virtual void setPrimitiveMode(PrimitiveMode primitiveMode) = 0;
 
 	virtual IBuffer* createBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc) = 0;

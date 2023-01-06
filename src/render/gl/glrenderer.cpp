@@ -64,6 +64,11 @@ void GLRenderer::draw(uint32_t verticesCount, uint32_t startVertexLocation)
 	glDrawArrays(m_primitiveMode, startVertexLocation, verticesCount);
 }
 
+void GLRenderer::drawIndexed(uint32_t indicesCount, uint32_t startIndexLocation, int32_t baseVertexLocation)
+{
+	glDrawElements(m_primitiveMode, indicesCount, GL_UNSIGNED_INT, 0);
+}
+
 void GLRenderer::setPrimitiveMode(PrimitiveMode primitiveMode)
 {
 	if (primitiveMode == PrimitiveMode_TriangleList)
