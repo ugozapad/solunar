@@ -33,9 +33,6 @@ public:
 
 private:
 	std::vector<ShaderInputLayout> m_shaderInputLayout;
-
-	const char* m_file_name;
-	const char* m_defines;
 	uint32_t m_program;
 };
 
