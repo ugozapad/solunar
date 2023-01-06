@@ -10,6 +10,7 @@
 #include "render/gl/glshadermanager.h"
 #include "render/gl/glshaderprogram.h"
 #include "render/gl/gltexture2d.h"
+#include "render/gl/gluniformbuffer.h"
 
 namespace solunar
 {
@@ -84,7 +85,7 @@ IBuffer* GLRenderer::createBuffer(const BufferDesc& bufferDesc, const Subresourc
 	case BufferType_IndexBuffer:
 		return new GLIndexBuffer(bufferDesc, subresourceDesc);
 	case BufferType_ConstantBuffer:
-		break;
+		return new GLUniformBuffer(bufferDesc, subresourceDesc);
 	default:
 		break;
 	}
@@ -121,6 +122,15 @@ void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)
 		GLShaderManager::setShaderProgram(glshaderProgram);
 	else
 		GLShaderManager::setShaderProgram(nullptr);
+}
+
+void GLRenderer::setConstantBuffer(uint32_t slot, IBuffer* constantBuffer)
+{
+	GLUniformBuffer* uniformBuffer = (GLUniformBuffer*)constantBuffer;
+	if (uniformBuffer)
+		glBindBufferBase(GL_UNIFORM_BUFFER, slot, uniformBuffer->getHandle());
+	else
+		glBindBufferBase(GL_UNIFORM_BUFFER, slot, 0);
 }
 
 ITexture2D* GLRenderer::createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc)

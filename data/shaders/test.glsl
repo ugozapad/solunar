@@ -6,10 +6,15 @@ layout (location=0) in vec3 position;
 
 //out vec2 v_texcoord;
 
+layout (std140) uniform GlobalData
+{
+    mat4 u_modelMatrix;
+};
+
 void main()
 {
    // v_texcoord = texcoord;
-    gl_Position = vec4(position, 1.0);
+    gl_Position = u_modelMatrix * vec4(position, 1.0);
 }
 #endif
 

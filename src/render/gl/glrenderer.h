@@ -42,6 +42,7 @@ public:
 
 	IShaderProgram* createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const std::vector<ShaderInputLayout>& inputLayouts) override;
 	void setShaderProgram(IShaderProgram* shaderProgram) override;
+	void setConstantBuffer(uint32_t slot, IBuffer* constantBuffer) override;
 
 	ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) override;
 

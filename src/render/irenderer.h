@@ -38,6 +38,7 @@ public:
 
 	virtual IShaderProgram* createShaderProgram(const ShaderCreationDesc& vertexShaderDesc, const ShaderCreationDesc& pixelShaderDesc, const std::vector<ShaderInputLayout>& inputLayouts) = 0;
 	virtual void setShaderProgram(IShaderProgram* shaderProgram) = 0;
+	virtual void setConstantBuffer(uint32_t slot, IBuffer* constantBuffer) = 0;
 
 	//virtual void setVertexShader(IVertexShader* shader) = 0;
 	//virtual void setPixelShader(IPixelShader* shader) = 0;

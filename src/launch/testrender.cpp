@@ -25,6 +25,7 @@ IShaderProgram* g_shaderProgram = nullptr;
 IBuffer* g_vertexBuffer = nullptr;
 IBuffer* g_indexBuffer = nullptr;
 ITexture2D* g_texture = nullptr;
+IBuffer* g_constantBuffer = nullptr;
 
 void createShaderProg()
 {
@@ -70,6 +71,11 @@ void createShaderProg()
 }
 
 }
+
+struct GlobalData
+{
+	float modelMatrix[4][4];
+};
 
 int main(int argc, char* argv[])
 {
@@ -123,6 +129,13 @@ int main(int argc, char* argv[])
 		1, 2, 3    // second triangle
 	};
 
+	GlobalData globalData = { 
+		{ 1.0f, 0.0f, 0.0f, 0.0f,
+		  0.0f, 1.0f, 0.0f, 0.0f,
+		  0.0f, 0.0f, 1.0f, 0.0f,
+		  0.0f, 0.0f, 0.0f, 1.0f }
+	};
+
 	// Create vertex buffer
 	BufferDesc bd = {};
 	bd.m_bufferType = BufferType_VertexBuffer;
@@ -145,6 +158,17 @@ int main(int argc, char* argv[])
 
 	g_indexBuffer = g_renderer->createBuffer(indicesBD, indicesSD);
 
+	// Create constant buffer
+	BufferDesc constantBD = {};
+	constantBD.m_bufferType = BufferType_ConstantBuffer;
+	constantBD.m_bufferAccess = BufferAccess_Dynamic;
+	constantBD.m_bufferMemorySize = sizeof(globalData);
+
+	SubresourceDesc constantSD = {};
+	constantSD.m_memory = &globalData;
+
+	g_constantBuffer = g_renderer->createBuffer(constantBD, constantSD);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -158,6 +182,8 @@ int main(int argc, char* argv[])
 		g_renderer->setShaderProgram(g_shaderProgram);
 
 		g_renderer->setIndexBuffer(g_indexBuffer);
+
+		g_renderer->setConstantBuffer(0, g_constantBuffer);
 
 		g_renderer->setPrimitiveMode(PrimitiveMode_TriangleList);
 		g_renderer->drawIndexed(6, 0, 0);
