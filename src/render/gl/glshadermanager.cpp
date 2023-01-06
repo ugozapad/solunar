@@ -15,7 +15,6 @@ const size_t g_inputTypeSizeTable[InputType_MAX] =
 	4	// InputType_Vec4
 };
 
-
 GLShaderManager* g_shaderManager = nullptr;
 
 void GLShaderManager::init()
@@ -38,6 +37,11 @@ void GLShaderManager::setShaderProgram(GLShaderProgram* program)
 		// apply vertex attributes
 		const std::vector<ShaderInputLayout>& inputLayouts = program->m_shaderInputLayout;
 		const int inputLayoutsCount = inputLayouts.size();
+
+		size_t inputLayoutElementsCount = 0;
+		for (int i = 0; i < inputLayoutsCount; i++)
+			inputLayoutElementsCount += g_inputTypeSizeTable[inputLayouts[i].m_semanticType];
+
 		size_t appliedOffset = 0;
 		for (int i = 0; i < inputLayoutsCount; i++)
 		{
@@ -45,8 +49,14 @@ void GLShaderManager::setShaderProgram(GLShaderProgram* program)
 			const size_t& elementSize = g_inputTypeSizeTable[layout.m_semanticType];
 
 			// #TODO: Only float now
-			glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, (elementSize * sizeof(float)) + layout.m_offset, (void*)0);
+			if (appliedOffset > 0)
+				glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, inputLayoutElementsCount * sizeof(float), (void*)(appliedOffset * sizeof(float)));
+			else
+				glVertexAttribPointer(i, elementSize, GL_FLOAT, GL_FALSE, inputLayoutElementsCount * sizeof(float), (void*)0);
+			
 			glEnableVertexAttribArray(i);
+
+			appliedOffset += elementSize;
 		}
 	}
 

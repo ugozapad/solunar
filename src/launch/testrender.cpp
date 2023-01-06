@@ -17,6 +17,9 @@
 
 #include "render/irenderer.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 namespace solunar
 {
 
@@ -63,8 +66,8 @@ void createShaderProg()
 
 	std::vector<ShaderInputLayout> inputLayouts =
 	{
-		{ InputType_Vec3, "POSITION", 0, 0 }//,
-		//{ InputType_Vec2, "TEXCOORD", 0, 12 },
+		{ InputType_Vec3, "POSITION", 0, 0 },
+		{ InputType_Vec2, "TEXCOORD", 0, 12 },
 	};
 
 	g_shaderProgram = g_renderer->createShaderProgram(vertexShaderCD, pixelShaderCD, inputLayouts);
@@ -118,15 +121,15 @@ int main(int argc, char* argv[])
 	createShaderProg();
 	
 	float vertices[] = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
+		// positions           // texture coords
+		 0.5f,  0.5f, 0.0f,    1.0f, 1.0f, // top right
+		 0.5f, -0.5f, 0.0f,    1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,    0.0f, 0.0f, // bottom left
+		-0.5f,  0.5f, 0.0f,    0.0f, 1.0f  // top left 
 	};
-
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
+	unsigned int indices[] = {
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
 	};
 
 	GlobalData globalData = { 
@@ -169,6 +172,25 @@ int main(int argc, char* argv[])
 
 	g_constantBuffer = g_renderer->createBuffer(constantBD, constantSD);
 
+	int width = 0, height = 0, channels = 0;
+	uint8_t* imageData = stbi_load("data/textures/test.png", &width, &height, &channels, STBI_rgb);
+	if (!imageData) return -1;
+
+	TextureDesc textureDesc = {};
+	textureDesc.m_textureType = TextureType_Texture2D;
+	textureDesc.m_width = width;
+	textureDesc.m_height = height;
+	textureDesc.m_mipmapLevel = 1;
+	textureDesc.m_format = PixelFormat_RGB8;
+
+	SubresourceDesc textureSD = {};
+	textureSD.m_memory = imageData;
+
+	g_texture = g_renderer->createTexture2D(textureDesc, textureSD);
+	
+	// free loaded texture
+	stbi_image_free(imageData);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
@@ -184,6 +206,7 @@ int main(int argc, char* argv[])
 		g_renderer->setIndexBuffer(g_indexBuffer);
 
 		g_renderer->setConstantBuffer(0, g_constantBuffer);
+		g_renderer->setTexture2D(0, g_texture);
 
 		g_renderer->setPrimitiveMode(PrimitiveMode_TriangleList);
 		g_renderer->drawIndexed(6, 0, 0);

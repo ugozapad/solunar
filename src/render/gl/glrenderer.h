@@ -45,6 +45,7 @@ public:
 	void setConstantBuffer(uint32_t slot, IBuffer* constantBuffer) override;
 
 	ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) override;
+	void setTexture2D(uint32_t slot, ITexture2D* texture) override;
 
 private:
 	void initRenderFeatures();

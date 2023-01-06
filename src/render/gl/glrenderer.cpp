@@ -67,7 +67,8 @@ void GLRenderer::draw(uint32_t verticesCount, uint32_t startVertexLocation)
 
 void GLRenderer::drawIndexed(uint32_t indicesCount, uint32_t startIndexLocation, int32_t baseVertexLocation)
 {
-	glDrawElements(m_primitiveMode, indicesCount, GL_UNSIGNED_INT, 0);
+	//glDrawElements(m_primitiveMode, indicesCount, GL_UNSIGNED_INT, 0);
+	glDrawElementsBaseVertex(m_primitiveMode, indicesCount, GL_UNSIGNED_INT, 0, baseVertexLocation);
 }
 
 void GLRenderer::setPrimitiveMode(PrimitiveMode primitiveMode)
@@ -136,6 +137,21 @@ void GLRenderer::setConstantBuffer(uint32_t slot, IBuffer* constantBuffer)
 ITexture2D* GLRenderer::createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc)
 {
 	return new GLTexture2D(textureDesc, subresourceDesc);
+}
+
+void GLRenderer::setTexture2D(uint32_t slot, ITexture2D* texture)
+{
+	GLTexture2D* gltexture = (GLTexture2D*)texture;
+	if (gltexture)
+	{
+		glActiveTexture(GL_TEXTURE0 + slot);
+		glBindTexture(GL_TEXTURE_2D, gltexture->getTextureHandle());
+	}
+	else
+	{
+		glActiveTexture(GL_TEXTURE0 + slot);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }
 
 void GLRenderer::initRenderFeatures()

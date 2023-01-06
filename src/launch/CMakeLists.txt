@@ -8,5 +8,6 @@ file(GLOB LAUNCH_SRC
 add_executable(launch ${LAUNCH_SRC})
 
 target_include_directories(launch PRIVATE "${CMAKE_SOURCE_DIR}/src")
+target_include_directories(launch PRIVATE "${CMAKE_SOURCE_DIR}/external/stb")
 
 target_link_libraries(launch glfw core render)
