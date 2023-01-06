@@ -19,11 +19,9 @@ GLShaderManager* g_shaderManager = nullptr;
 
 void GLShaderManager::init()
 {
-	//Logger::msg("Initialize shader manager ...");
-
 	int maxVertexUniformBlocks = 0;
 	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &maxVertexUniformBlocks);
-	//Logger::msg("max vertex uniform blocks %i", maxVertexUniformBlocks);
+	printf("max vertex uniform blocks %i\n", maxVertexUniformBlocks);
 }
 
 void GLShaderManager::shutdown()
@@ -32,6 +30,7 @@ void GLShaderManager::shutdown()
 
 void GLShaderManager::setShaderProgram(GLShaderProgram* program)
 {
+	// #TODO: REFACTOR
 	if (program)
 	{
 		// apply vertex attributes
