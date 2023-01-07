@@ -46,7 +46,6 @@ jobs:
       - name: Configure depencencies (Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt update && sudo apt upgrade -y
           sudo apt install -y \
             libxrandr-dev \
             libxinerama-dev \
