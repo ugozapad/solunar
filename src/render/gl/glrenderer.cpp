@@ -5,12 +5,10 @@
 #include <stdio.h>
 
 #include "render/gl/glrenderer.h"
-#include "render/gl/glvertexbuffer.h"
-#include "render/gl/glindexbuffer.h"
+#include "render/gl/glbuffer.h"
 #include "render/gl/glshadermanager.h"
 #include "render/gl/glshaderprogram.h"
 #include "render/gl/gltexture2d.h"
-#include "render/gl/gluniformbuffer.h"
 
 namespace solunar
 {
@@ -82,11 +80,11 @@ IBuffer* GLRenderer::createBuffer(const BufferDesc& bufferDesc, const Subresourc
 	switch (bufferDesc.m_bufferType)
 	{
 	case BufferType_VertexBuffer:
-		return new GLVertexBuffer(bufferDesc, subresourceDesc);
+		return new GLBuffer(bufferDesc, subresourceDesc);
 	case BufferType_IndexBuffer:
-		return new GLIndexBuffer(bufferDesc, subresourceDesc);
+		return new GLBuffer(bufferDesc, subresourceDesc);
 	case BufferType_ConstantBuffer:
-		return new GLUniformBuffer(bufferDesc, subresourceDesc);
+		return new GLBuffer(bufferDesc, subresourceDesc);
 	default:
 		break;
 	}
@@ -127,7 +125,7 @@ void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)
 
 void GLRenderer::setConstantBuffer(uint32_t slot, IBuffer* constantBuffer)
 {
-	GLUniformBuffer* uniformBuffer = (GLUniformBuffer*)constantBuffer;
+	GLBuffer* uniformBuffer = (GLBuffer*)constantBuffer;
 	if (uniformBuffer)
 		glBindBufferBase(GL_UNIFORM_BUFFER, slot, uniformBuffer->getHandle());
 	else

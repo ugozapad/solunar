@@ -1,16 +1,16 @@
-#ifndef RENDER_GL_GLUNIFORMBUFFER_H
-#define RENDER_GL_GLUNIFORMBUFFER_H
+#ifndef RENDER_GL_GLBUFFER_H
+#define RENDER_GL_GLBUFFER_H
 
 #include "render/gl/glshared.h"
 
 namespace solunar
 {
 
-class GLUniformBuffer : public IGLBufferBase
+class GLBuffer : public IGLBufferBase
 {
 public:
-	GLUniformBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc);
-	~GLUniformBuffer();
+	GLBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc);
+	~GLBuffer();
 
 	void bind();
 
@@ -23,8 +23,9 @@ public:
 
 private:
 	uint32_t m_buffer;
+	GLenum m_target;
 };
 
 }
 
-#endif // !RENDER_GL_GLUNIFORMBUFFER_H
+#endif // !RENDER_GL_GLBUFFER_H
