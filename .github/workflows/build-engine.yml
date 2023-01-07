@@ -51,7 +51,8 @@ jobs:
             libxrandr-dev \
             libxinerama-dev \
             libxcursor-dev \
-            libxi-dev
+            libxi-dev \
+            libgl-dev
         shell: bash
 
       - name: Configure CMake
