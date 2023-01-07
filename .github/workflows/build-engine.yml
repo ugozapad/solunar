@@ -1,0 +1,46 @@
+name: 'Build engine'
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'external/**'
+      - 'src/**'
+      - 'CMakeLists.txt'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'external/**'
+      - 'src/**'
+      - 'CMakeLists.txt'
+
+jobs:
+  build-engine:
+    name: 'Building'
+
+    strategy:
+      matrix:
+        system:
+          - windows-latest
+          - ubuntu-latest
+        config:
+          - Debug
+          - Release
+
+    runs-on: ${{ matrix.system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure CMake
+        run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+
+      - name: Build engine
+        run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.config }}
