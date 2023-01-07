@@ -4,6 +4,7 @@
 #include "core/filesystem/file.h"
 #include "core/filesystem/ifilesystem.h"
 
+#include <stdlib.h>
 #include <string>
 
 namespace solunar
