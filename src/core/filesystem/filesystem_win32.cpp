@@ -89,7 +89,7 @@ std::string FileSystemWin32::computePath(const char* path)
 {
 	std::string filename = path;
 
-	// if filepath doesn't have path symbol at beggin
+	// if filepath doesn't have path symbol at begin
 	if (filename[0] != '/')
 		filename.insert(0, 1, '/');
 

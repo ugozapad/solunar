@@ -1,17 +1,21 @@
 #if 0
 #include <GLFW/glfw3.h>
 
-#ifdef WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#endif // WIN32
-
 #include "core/filesystem/vfs.h"
 #include "core/filesystem/ifilesystem.h"
 
-#ifdef WIN32
+#if defined(_WINDOWS)
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 #include "core/filesystem/filesystem_win32.h"
-#endif // WIN32
+#elif defined(__unix__)
+#include <unistd.h>
+#include <stdio.h>
+#include <limits.h>
+
+#include "core/filesystem/filesystem_unix.h"
+#endif // defined(WINDOWS)
 
 #include "render/irenderer.h"
 
@@ -23,12 +27,18 @@ int main(int argc, char* argv[])
 		return -1;
 
 	// Initialize file system for platform
-#ifdef WIN32
+#if defined(_WINDOWS)
 	char currentDirectory[MAX_PATH];
 	GetCurrentDirectoryA(MAX_PATH, currentDirectory);
 
 	g_fileSystem = new FileSystemWin32(currentDirectory);
-#endif // WIN32
+#elif defined(__unix__)
+	char cwd[PATH_MAX];
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return -1; // failed to get current working directory
+
+	g_fileSystem = new FileSystemUnix(cwd);
+#endif // defined(WINDOWS)
 
 	// Mount root filesystem
 	VirtualFileSystem::getInstance()->mount("/", g_fileSystem);
