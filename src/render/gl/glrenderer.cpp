@@ -95,7 +95,7 @@ void GLRenderer::setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offs
 {
 	IGLBufferBase* bufferBase = (IGLBufferBase*)buffer;
 	if (bufferBase)
-		bufferBase->bind();
+		glBindBuffer(GL_ARRAY_BUFFER, bufferBase->getHandle());
 	else
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -104,7 +104,7 @@ void GLRenderer::setIndexBuffer(IBuffer* buffer)
 {
 	IGLBufferBase* bufferBase = (IGLBufferBase*)buffer;
 	if (bufferBase)
-		bufferBase->bind();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferBase->getHandle());
 	else
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -125,7 +125,7 @@ void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)
 
 void GLRenderer::setConstantBuffer(uint32_t slot, IBuffer* constantBuffer)
 {
-	GLBuffer* uniformBuffer = (GLBuffer*)constantBuffer;
+	IGLBufferBase* uniformBuffer = (IGLBufferBase*)constantBuffer;
 	if (uniformBuffer)
 		glBindBufferBase(GL_UNIFORM_BUFFER, slot, uniformBuffer->getHandle());
 	else

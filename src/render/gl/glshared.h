@@ -19,6 +19,8 @@ public:
 	virtual ~IGLBufferBase() {}
 
 	virtual void bind() = 0;
+
+	virtual uint32_t getHandle() = 0;
 };
 
 }

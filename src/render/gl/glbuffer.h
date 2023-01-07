@@ -19,7 +19,7 @@ public:
 
 	void updateSubresource(void* data) override;
 
-	uint32_t getHandle() { return m_buffer; }
+	uint32_t getHandle() override { return m_buffer; }
 
 private:
 	uint32_t m_buffer;
