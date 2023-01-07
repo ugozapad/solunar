@@ -1,6 +1,8 @@
 #ifndef CORE_FILESYSTEM_WIN32_H
 #define CORE_FILESYSTEM_WIN32_H
 
+#ifdef _WINDOWS
+
 #ifdef _MSC_VER
 #	pragma once
 #endif // _MSC_VER
@@ -53,5 +55,7 @@ private:
 };
 
 }
+
+#endif // _WINDOWS
 
 #endif // !CORE_FILESYSTEM_WIN32_H

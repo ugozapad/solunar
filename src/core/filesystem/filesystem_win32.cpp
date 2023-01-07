@@ -1,3 +1,5 @@
+#ifdef _WINDOWS
+
 #include "core/filesystem/filesystem_win32.h"
 
 #define WIN32_LEAN_AND_MEAN
@@ -106,3 +108,5 @@ std::string FileSystemWin32::computePath(const char* path)
 }
 
 }
+
+#endif
