@@ -1,4 +1,17 @@
-.vs
-.vscode
-bin
-build
+# Global ignore list of different binaries and another temporary files
+
+# Visual Studio cache and settings
+.vs/
+*.suo
+*.user
+
+# Visual Studio Code cache and settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Build results
+bin/
+build/
