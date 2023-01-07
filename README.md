@@ -19,7 +19,7 @@ An open-source 3D graphics engine created to learn how games and engines works
 - Get the repository
 
   ```shell
-  git clone https://github.com/ugozapad/solunar.git
+  git clone https://github.com/ugozapad/solunar.git --recursive
   ```
 
 - Generate projects or build scripts
