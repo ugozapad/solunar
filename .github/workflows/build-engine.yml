@@ -47,7 +47,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt update && sudo apt upgrade -y
-          sudo apt install libxrandr -y
+          sudo apt install libxrandr-dev -y
 
       - name: Configure CMake
         run: |
