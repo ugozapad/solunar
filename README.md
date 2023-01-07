@@ -37,6 +37,15 @@ An open-source 3D graphics engine created to learn how games and engines works
   msbuild build\solunar.sln
   ```
 
+## Credits
+Solunar uses several open-source libraries:
+- GLFW (https://github.com/glfw/glfw)
+- GLAD (https://github.com/Dav1dde/glad)
+
+Additional help and inspiration from:
+- 3D Game Engine Architecture, Engineering Real-Time Applications with Wild Magic
+- Real-Time Rendering, Third Edition
+
 ## License
 
 This project licensed under terms of the __MIT__ license. See [this](./LICENSE) file for details
