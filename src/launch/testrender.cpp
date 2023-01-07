@@ -9,6 +9,7 @@
 #endif // WIN32
 
 #include "core/filesystem/vfs.h"
+#include "core/filesystem/file.h"
 #include "core/filesystem/ifilesystem.h"
 
 #ifdef WIN32
