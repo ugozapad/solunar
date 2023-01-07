@@ -13,16 +13,6 @@ GLenum getBufferType(BufferType type);
 GLenum getBufferAccess(BufferAccess access);
 GLenum getBufferMapping(BufferMapping mapping);
 
-class IGLBufferBase : public IBuffer
-{
-public:
-	virtual ~IGLBufferBase() {}
-
-	virtual void bind() = 0;
-
-	virtual uint32_t getHandle() = 0;
-};
-
 }
 
 #endif // !RENDER_GL_GLSHARED_H

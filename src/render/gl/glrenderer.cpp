@@ -93,7 +93,7 @@ IBuffer* GLRenderer::createBuffer(const BufferDesc& bufferDesc, const Subresourc
 
 void GLRenderer::setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offset)
 {
-	IGLBufferBase* bufferBase = (IGLBufferBase*)buffer;
+	GLBuffer* bufferBase = (GLBuffer*)buffer;
 	if (bufferBase)
 		glBindBuffer(GL_ARRAY_BUFFER, bufferBase->getHandle());
 	else
@@ -102,7 +102,7 @@ void GLRenderer::setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offs
 
 void GLRenderer::setIndexBuffer(IBuffer* buffer)
 {
-	IGLBufferBase* bufferBase = (IGLBufferBase*)buffer;
+	GLBuffer* bufferBase = (GLBuffer*)buffer;
 	if (bufferBase)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferBase->getHandle());
 	else
@@ -125,7 +125,7 @@ void GLRenderer::setShaderProgram(IShaderProgram* shaderProgram)
 
 void GLRenderer::setConstantBuffer(uint32_t slot, IBuffer* constantBuffer)
 {
-	IGLBufferBase* uniformBuffer = (IGLBufferBase*)constantBuffer;
+	GLBuffer* uniformBuffer = (GLBuffer*)constantBuffer;
 	if (uniformBuffer)
 		glBindBufferBase(GL_UNIFORM_BUFFER, slot, uniformBuffer->getHandle());
 	else
