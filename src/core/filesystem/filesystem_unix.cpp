@@ -1,5 +1,7 @@
 #ifdef __unix__
 
+#include <cstddef>
+
 #include "core/filesystem/filesystem_unix.h"
 
 #include <sys/types.h>
