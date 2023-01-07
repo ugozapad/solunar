@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "core/filesystem/vfs.h"
 #include "core/filesystem/ifilesystem.h"
 

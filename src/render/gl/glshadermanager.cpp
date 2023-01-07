@@ -1,3 +1,6 @@
+#include <cstddef>
+#include <cstdio>
+
 #include "render/gl/glshadermanager.h"
 #include "render/gl/glshaderprogram.h"
 

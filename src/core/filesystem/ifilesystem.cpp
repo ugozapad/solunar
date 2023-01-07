@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "core/filesystem/ifilesystem.h"
 #include "core/filesystem/file.h"
 

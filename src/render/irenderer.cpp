@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "render/irenderer.h"
 
 namespace solunar
