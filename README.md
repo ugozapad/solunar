@@ -1,5 +1,8 @@
 # Solunar Engine
 
+[![Build engine](https://github.com/ugozapad/solunar/actions/workflows/build-engine.yml/badge.svg)](https://github.com/ugozapad/solunar/actions/workflows/build-engine.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ugozapad/solunar/blob/main/LICENSE)
+
 An open-source 3D graphics engine created to learn how games and engines works
 
 ## Features
@@ -7,7 +10,7 @@ An open-source 3D graphics engine created to learn how games and engines works
 - Custom compile-time reflection system
 - Crossplatform support
 - OpenGL 3.3 Forward renderer (which use direct state access if enabled)
-- Entity Component node-based scene hierarchy 
+- Entity Component node-based scene hierarchy
 
 ## Requirements
 
