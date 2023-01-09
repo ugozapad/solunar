@@ -41,6 +41,7 @@ An open-source 3D graphics engine created to learn how games and engines works
 Solunar uses several open-source libraries:
 - GLFW (https://github.com/glfw/glfw)
 - GLAD (https://github.com/Dav1dde/glad)
+- GLM (https://github.com/g-truc/glm)
 
 Additional help and inspiration from:
 - 3D Game Engine Architecture, Engineering Real-Time Applications with Wild Magic
