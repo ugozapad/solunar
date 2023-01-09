@@ -19,3 +19,6 @@ add_library(core STATIC
 )
 
 target_include_directories(core PRIVATE "${CMAKE_SOURCE_DIR}/src")
+
+# GLM Linkage
+target_include_directories(core PUBLIC "${CMAKE_SOURCE_DIR}/external/glm")
