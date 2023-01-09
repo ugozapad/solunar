@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "render/buffer.h"
-#include "render/texture.h"
+#include "render/ibuffer.h"
+#include "render/itexture.h"
 #include "render/ishaderprogram.h"
 
 struct GLFWwindow;
