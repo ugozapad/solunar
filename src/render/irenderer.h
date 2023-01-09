@@ -22,7 +22,7 @@ class IRenderer
 public:
 	virtual ~IRenderer() {}
 
-	virtual void initialize() = 0;
+	virtual void init() = 0;
 	virtual void shutdown() = 0;
 
 	virtual void beginFrame() = 0;

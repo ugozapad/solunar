@@ -39,12 +39,23 @@ GLRenderer::~GLRenderer()
 	glDeleteVertexArrays(1, &m_vertexArraysObject);	
 }
 
-void GLRenderer::initialize()
+void GLRenderer::init()
 {
+	// Create shader manager for GL
+	g_shaderManager = new GLShaderManager();
+	g_shaderManager->init();
 }
 
 void GLRenderer::shutdown()
 {
+	// Destroy shader manager
+	if (g_shaderManager)
+	{
+		g_shaderManager->shutdown();
+
+		delete g_shaderManager;
+		g_shaderManager = nullptr;
+	}
 }
 
 void GLRenderer::beginFrame()

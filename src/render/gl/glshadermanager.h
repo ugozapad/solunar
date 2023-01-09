@@ -3,22 +3,22 @@
 
 #include <vector>
 
+#include "render/ishadermanager.h"
+
 namespace solunar
 {
 
 class GLShaderProgram;
 
-class GLShaderManager
+class GLShaderManager : public IShaderManager
 {
 public:
-	void init();
-	void shutdown();
+	void init() override;
+	void shutdown() override;
 
 	static void setShaderProgram(GLShaderProgram* program);
 	static void deleteProgram(GLShaderProgram* program);
 };
-
-extern GLShaderManager* g_shaderManager;
 
 }
 

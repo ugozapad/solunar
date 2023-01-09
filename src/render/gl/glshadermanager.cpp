@@ -18,8 +18,6 @@ const size_t g_inputTypeSizeTable[InputType_MAX] =
 	4	// InputType_Vec4
 };
 
-GLShaderManager* g_shaderManager = nullptr;
-
 void GLShaderManager::init()
 {
 	int maxVertexUniformBlocks = 0;

@@ -127,6 +127,7 @@ int main(int argc, char* argv[])
 
 	// Initialize renderer
 	g_renderer = createGLRenderer(window);
+	g_renderer->init();
 
 	// Create shader program from file
 	createShaderProg();
@@ -226,6 +227,7 @@ int main(int argc, char* argv[])
 	}
 
 	// Delete renderer
+	g_renderer->shutdown();
 	delete g_renderer;
 	g_renderer = nullptr;
 

@@ -26,7 +26,7 @@ public:
 	GLRenderer(GLFWwindow* window);
 	~GLRenderer();
 
-	void initialize() override;
+	void init() override;
 	void shutdown() override;
 
 	void beginFrame() override;
