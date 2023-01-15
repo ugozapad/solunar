@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "render/ishaderprogram.h"
-#include "render/gl/glshared.h"
+#include "render/core/ishaderprogram.h"
+#include "render/core/gl/glshared.h"
 
 namespace solunar
 {

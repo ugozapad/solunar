@@ -1,7 +1,7 @@
 #ifndef RENDER_GL_GLRENDERER_H
 #define RENDER_GL_GLRENDERER_H
 
-#include "render/irenderer.h"
+#include "render/core/irenderer.h"
 
 namespace solunar
 {

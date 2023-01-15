@@ -1,4 +1,4 @@
-#include "render/gl/glbuffer.h"
+#include "render/core/gl/glbuffer.h"
 
 namespace solunar
 {
@@ -44,6 +44,7 @@ void GLBuffer::unmap()
 void GLBuffer::updateSubresource(void* data)
 {
 	//glBufferData(m_target, size, data, isStream ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+	glBufferSubData(m_target, 0, 0, data);
 }
 
 }

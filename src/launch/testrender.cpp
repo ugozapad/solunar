@@ -20,7 +20,7 @@
 #include "core/filesystem/filesystem_unix.h"
 #endif // defined(WINDOWS)
 
-#include "render/irenderer.h"
+#include "render/core/irenderer.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"

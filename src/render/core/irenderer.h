@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "render/ibuffer.h"
-#include "render/itexture.h"
-#include "render/ishaderprogram.h"
+#include "render/core/ibuffer.h"
+#include "render/core/itexture.h"
+#include "render/core/ishaderprogram.h"
 
 struct GLFWwindow;
 

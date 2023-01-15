@@ -3,8 +3,8 @@
 
 #include <glad/glad.h>
 
-#include "render/ibuffer.h"
-#include "render/itexture.h"
+#include "render/core/ibuffer.h"
+#include "render/core/itexture.h"
 
 namespace solunar
 {

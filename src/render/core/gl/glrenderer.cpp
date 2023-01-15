@@ -4,11 +4,11 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "render/gl/glrenderer.h"
-#include "render/gl/glbuffer.h"
-#include "render/gl/glshadermanager.h"
-#include "render/gl/glshaderprogram.h"
-#include "render/gl/gltexture2d.h"
+#include "render/core/gl/glrenderer.h"
+#include "render/core/gl/glbuffer.h"
+#include "render/core/gl/glshadermanager.h"
+#include "render/core/gl/glshaderprogram.h"
+#include "render/core/gl/gltexture2d.h"
 
 namespace solunar
 {

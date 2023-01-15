@@ -1,4 +1,4 @@
-#include "render/gl/gltexture2d.h"
+#include "render/core/gl/gltexture2d.h"
 
 namespace solunar
 {

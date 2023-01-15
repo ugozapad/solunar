@@ -1,7 +1,7 @@
 #ifndef RENDER_GL_GLBUFFER_H
 #define RENDER_GL_GLBUFFER_H
 
-#include "render/gl/glshared.h"
+#include "render/core/gl/glshared.h"
 
 namespace solunar
 {

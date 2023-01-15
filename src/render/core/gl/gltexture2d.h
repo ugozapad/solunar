@@ -1,8 +1,8 @@
 #ifndef RENDER_GL_GLTEXTURE2D_H
 #define RENDER_GL_GLTEXTURE2D_H
 
-#include "render/itexture.h"
-#include "render/gl/glshared.h"
+#include "render/core/itexture.h"
+#include "render/core/gl/glshared.h"
 
 namespace solunar
 {

@@ -1,8 +1,8 @@
 #include <cstddef>
 #include <cstdio>
 
-#include "render/gl/glshadermanager.h"
-#include "render/gl/glshaderprogram.h"
+#include "render/core/gl/glshadermanager.h"
+#include "render/core/gl/glshaderprogram.h"
 
 namespace solunar
 {

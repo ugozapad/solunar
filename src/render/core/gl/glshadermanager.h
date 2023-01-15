@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "render/ishadermanager.h"
+#include "render/core/ishadermanager.h"
 
 namespace solunar
 {

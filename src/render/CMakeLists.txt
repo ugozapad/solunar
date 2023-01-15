@@ -5,17 +5,22 @@ file(GLOB RENDER_SRC
     "${RENDER_SRC_DIR}/*.h"
 )
 
-file(GLOB RENDER_GL_SRC
-    "${RENDER_SRC_DIR}/gl/*.cpp"
-    "${RENDER_SRC_DIR}/gl/*.h"
+file(GLOB RENDER_CORE_SRC
+    "${RENDER_SRC_DIR}/core/*.cpp"
+    "${RENDER_SRC_DIR}/core/*.h"
 )
 
-source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_SRC})
-source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_GL_SRC})
+file(GLOB RENDER_CORE_GL_SRC
+    "${RENDER_SRC_DIR}/core/gl/*.cpp"
+    "${RENDER_SRC_DIR}/core/gl/*.h"
+)
+
+source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_SRC})
+source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_GL_SRC})
 
 add_library(render STATIC
-    ${RENDER_SRC}
-    ${RENDER_GL_SRC}
+    ${RENDER_CORE_SRC}
+    ${RENDER_CORE_GL_SRC}
 )
 
 target_include_directories(render PRIVATE "${CMAKE_SOURCE_DIR}/src")

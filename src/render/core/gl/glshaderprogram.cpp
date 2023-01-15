@@ -1,6 +1,6 @@
 #include <cstddef>
 
-#include "render/gl/glshaderprogram.h"
+#include "render/core/gl/glshaderprogram.h"
 #include "core/filesystem/vfs.h"
 #include "core/filesystem/file.h"
 
