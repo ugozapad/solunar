@@ -25,6 +25,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace solunar
 {
 
@@ -82,7 +85,7 @@ void createShaderProg()
 
 struct GlobalData
 {
-	float modelMatrix[4][4];
+	glm::mat4 modelMatrix;
 };
 
 int main(int argc, char* argv[])
@@ -206,6 +209,15 @@ int main(int argc, char* argv[])
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
+
+		// Update constant buffer matrix
+		globalData.modelMatrix = glm::identity<glm::mat4>();
+		globalData.modelMatrix = glm::rotate(globalData.modelMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+	
+		g_renderer->setConstantBuffer(0, g_constantBuffer);
+		GlobalData* globalDataGPU = (GlobalData*)g_constantBuffer->map(BufferMapping_WriteDiscard);
+		memcpy(globalDataGPU, &globalData, sizeof(globalData));
+		g_constantBuffer->unmap();
 
 		g_renderer->beginFrame();
 
