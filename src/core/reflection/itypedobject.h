@@ -36,13 +36,13 @@ inline bool ITypedObject::isExactlyKindOf()
 template <typename T>
 inline T* dynamicCast(const ITypedObject* typedObject)
 {
-	return typedObject && typedObject->isKindOf<T>() ? (T*)typedObject : NULL;
+	return typedObject && typedObject->isKindOf<T>() ? (T*)typedObject : nullptr;
 }
 
 template <typename T>
 inline const T* dynamicCast(const ITypedObject* typedObject)
 {
-	return typedObject && typedObject->isKindOf<T> ? (T*)typedObject : NULL;
+	return typedObject && typedObject->isKindOf<T> ? (T*)typedObject : nullptr;
 }
 
 template <typename T>
