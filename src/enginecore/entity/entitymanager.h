@@ -17,6 +17,8 @@ public:
 	Entity createEntity();
 	Entity getEntity(uint64_t entityId);
 
+	const std::vector<Entity>& getEntities() { return m_entities; }
+
 private:
 	std::vector<Entity> m_entities;
 	uint64_t m_entitiesCount;
