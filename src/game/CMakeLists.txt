@@ -1,13 +1,20 @@
 set(GAME_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
+file(GLOB GAME_SRC
+    "${GAME_SRC_DIR}/*.cpp"
+    "${GAME_SRC_DIR}/*.h"
+)
+
 file(GLOB GAME_RENDER_SRC
     "${GAME_SRC_DIR}/render/*.cpp"
     "${GAME_SRC_DIR}/render/*.h"
 )
 
+source_group(TREE ${GAME_SRC_DIR} FILES ${GAME_SRC})
 source_group(TREE ${GAME_SRC_DIR} FILES ${GAME_RENDER_SRC})
 
 add_library(game STATIC
+    ${GAME_SRC}
     ${GAME_RENDER_SRC}
 )
 

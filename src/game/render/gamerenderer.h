@@ -14,6 +14,8 @@ public:
 	void init(GLFWwindow* window);
 	void shutdown();
 
+	void testRender();
+
 	void renderLevel(Level& level);
 };
 

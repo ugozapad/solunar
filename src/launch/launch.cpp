@@ -1,4 +1,3 @@
-#if 0
 #include <GLFW/glfw3.h>
 
 #include "core/filesystem/vfs.h"
@@ -17,7 +16,8 @@
 #include "core/filesystem/filesystem_unix.h"
 #endif // defined(WINDOWS)
 
-#include "render/irenderer.h"
+// Game includes
+#include "game/game.h"
 
 int main(int argc, char* argv[])
 {
@@ -59,21 +59,19 @@ int main(int argc, char* argv[])
 	if (!window)
 		return -1;
 
-	// Initialize renderer
-	g_renderer = createGLRenderer(window);
+	// Initialize game
+	getGameMain()->init(window);
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
 		
-		// engine and render code here...
-		g_renderer->beginFrame();
-		g_renderer->endFrame();
+		// Update game
+		getGameMain()->update();
 	}
 
-	// Delete renderer
-	delete g_renderer;
-	g_renderer = nullptr;
+	// Delete game
+	getGameMain()->shutdown();
 
 	// Delete filesystem
 	delete g_fileSystem;
@@ -83,4 +81,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-#endif
