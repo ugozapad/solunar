@@ -2,6 +2,7 @@
 #define RENDER_ISHADERPROGRAM_H
 
 #include <stdint.h>
+#include <cstddef>
 
 namespace solunar
 {
