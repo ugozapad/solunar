@@ -35,7 +35,7 @@ Entity::~Entity()
 	m_rootEntity = nullptr;
 }
 
-void Entity::setRotation(glm::vec3& rot)
+void Entity::setRotation(const glm::vec3 & rot)
 {
 	m_rotation = rot;
 }
@@ -56,13 +56,12 @@ Component* Entity::getComponentByTypeInfo(const TypeInfo* typeinfo)
 {
 	for (ComponentIt it = m_components.begin(); it != m_components.end(); ++it)
 	{
-		std::shared_ptr<Component> component = *it;
-
+		Component* component = *it;
 		if (component)
 		{
 			const TypeInfo* typeInfo = component->getTypeInfo();
 			if (typeInfo && typeInfo->isExactly(typeInfo))
-				return component.get();
+				return component;
 		}
 	}
 
@@ -83,6 +82,7 @@ Entity* Entity::createChild()
 {
 	Entity* entity = m_level->createEntity();
 	entity->setRootEntity(this);
+	m_children.push_back(entity);
 	return entity;
 }
 
