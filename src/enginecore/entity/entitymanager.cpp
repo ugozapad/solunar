@@ -3,8 +3,7 @@
 namespace solunar
 {
 
-EntityManager::EntityManager() :
-	m_entitiesCount(0)
+EntityManager::EntityManager()
 {
 }
 
@@ -12,19 +11,11 @@ EntityManager::~EntityManager()
 {
 }
 
-Entity EntityManager::createEntity()
+Entity* EntityManager::createEntity()
 {
-	Entity entity(m_entitiesCount++);
+	Entity* entity = new Entity();
+	m_entities.push_back(entity);
 	return entity;
-}
-
-Entity EntityManager::getEntity(uint64_t entityId)
-{
-	for (auto& it : m_entities)
-		if (it.getHandle() == entityId)
-			return it;
-
-	return Entity(kInvalidEntityHandle);
 }
 
 }

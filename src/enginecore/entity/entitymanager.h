@@ -14,15 +14,10 @@ public:
 	EntityManager();
 	~EntityManager();
 
-	Entity createEntity();
-	Entity getEntity(uint64_t entityId);
-
-	const std::vector<Entity>& getEntities() { return m_entities; }
+	Entity* createEntity();
 
 private:
-	std::vector<Entity> m_entities;
-	uint64_t m_entitiesCount;
-
+	std::vector<Entity*> m_entities;
 };
 
 }

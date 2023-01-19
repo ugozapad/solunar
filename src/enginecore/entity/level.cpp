@@ -13,7 +13,7 @@ Level::~Level()
 {
 }
 
-Entity Level::createEntity()
+Entity* Level::createEntity()
 {
 	return m_entityManager.createEntity();
 }

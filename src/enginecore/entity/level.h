@@ -18,7 +18,7 @@ public:
 	Level();
 	~Level();
 
-	Entity createEntity();
+	Entity* createEntity();
 
 	EntityManager& getEntityManager() { return m_entityManager; }
 

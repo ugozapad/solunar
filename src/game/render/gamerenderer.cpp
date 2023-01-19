@@ -32,16 +32,7 @@ void GameRenderer::testRender()
 
 void GameRenderer::renderLevel(Level& level)
 {
-	EntityManager& entityManager = level.getEntityManager();
-	const std::vector<Entity>& entities = entityManager.getEntities();
-
-	for (auto& it : entities)
-	{
-		if (it.isValidHandle())
-		{
-
-		}
-	}
+	
 }
 
 }
