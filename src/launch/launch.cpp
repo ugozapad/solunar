@@ -16,6 +16,9 @@
 #include "core/filesystem/filesystem_unix.h"
 #endif // defined(WINDOWS)
 
+// Engine include
+#include "enginecore/engine.h"
+
 // Game includes
 #include "game/game.h"
 
@@ -59,6 +62,9 @@ int main(int argc, char* argv[])
 	if (!window)
 		return -1;
 
+	// Initialize engine
+	Engine::instance()->init();
+
 	// Initialize game
 	getGameMain()->init(window);
 
@@ -72,6 +78,9 @@ int main(int argc, char* argv[])
 
 	// Delete game
 	getGameMain()->shutdown();
+
+	// Shutdown engine
+	Engine::instance()->shutdown();
 
 	// Delete filesystem
 	delete g_fileSystem;
