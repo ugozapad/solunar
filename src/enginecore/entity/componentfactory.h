@@ -49,7 +49,7 @@ template<typename T>
 void ComponentFactory::registerComponent()
 {
 	// our typeinfo
-	const TypeInfo* typeInfo = getTypeInfo<T>();
+	const TypeInfo* typeInfo = get_type_info<T>();
 
 	// our function
 	CreateComponentFunc_t createComponentFunc = (CreateComponentFunc_t)createComponentTempated<T>();
@@ -62,7 +62,7 @@ template <typename T>
 T* ComponentFactory::createComponent()
 {
 	// our typeinfo
-	const TypeInfo* typeInfo = getTypeInfo<T>();
+	const TypeInfo* typeInfo = get_type_info<T>();
 
 	auto factory = m_factories.find(typeInfo);
 	if (factory == m_factories.end())

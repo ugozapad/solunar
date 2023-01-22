@@ -46,7 +46,7 @@ inline const T* dynamicCast(const ITypedObject* typedObject)
 }
 
 template <typename T>
-inline const TypeInfo* getTypeInfo()
+inline const TypeInfo* get_type_info()
 {
 	return &T::ms_typeInfo;
 }
