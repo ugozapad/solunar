@@ -1,5 +1,6 @@
 #include "enginecore/entity/entity.h"
 #include "enginecore/entity/component.h"
+#include "enginecore/entity/componentfactory.h"
 #include "enginecore/entity/level.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -52,22 +53,6 @@ glm::mat4 Entity::getLocalTranslation()
 	return tranlation;
 }
 
-Component* Entity::getComponentByTypeInfo(const TypeInfo* typeinfo)
-{
-	for (ComponentIt it = m_components.begin(); it != m_components.end(); ++it)
-	{
-		Component* component = *it;
-		if (component)
-		{
-			const TypeInfo* typeInfo = component->getTypeInfo();
-			if (typeInfo && typeInfo->isExactly(typeInfo))
-				return component;
-		}
-	}
-
-	return nullptr;
-}
-
 void Entity::setRootEntity(Entity* Entity)
 {
 	m_rootEntity = Entity;
@@ -86,5 +71,36 @@ Entity* Entity::createChild()
 	return entity;
 }
 
+Component* Entity::createComponentByTypeInfo(const TypeInfo* typeinfo)
+{
+	if (g_componentFactory)
+	{
+		Component* component = (Component*)g_componentFactory->createComponentByTypeInfo(typeinfo);
+		m_components.push_back(component);
+
+		component->onEntitySet(this);
+		if (m_level) component->onLevelSet(m_level);
+
+		return component;
+	}
+
+	return nullptr;
+}
+
+Component* Entity::getComponentByTypeInfo(const TypeInfo* typeinfo)
+{
+	for (ComponentIt it = m_components.begin(); it != m_components.end(); ++it)
+	{
+		Component* component = *it;
+		if (component)
+		{
+			const TypeInfo* typeInfo = component->getTypeInfo();
+			if (typeInfo && typeInfo->isExactly(typeInfo))
+				return component;
+		}
+	}
+
+	return nullptr;
+}
 
 }

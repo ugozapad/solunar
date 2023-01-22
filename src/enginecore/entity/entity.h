@@ -43,7 +43,15 @@ public:
 
 	Entity* createChild();
 
+	Component* createComponentByTypeInfo(const TypeInfo* typeinfo);
+
+	template <typename T>
+	T* createComponent();
+
 	Component* getComponentByTypeInfo(const TypeInfo* typeinfo);
+
+	template <typename T>
+	T* getComponent();
 
 private:
 	typedef std::list<Component*>::iterator ComponentIt;
@@ -61,6 +69,18 @@ private:
 	glm::vec3 m_position;
 	glm::vec3 m_scale;
 };
+
+template<typename T>
+inline T* Entity::createComponent()
+{
+	return createComponentByTypeInfo(getTypeInfo<T>());
+}
+
+template<typename T>
+inline T* Entity::getComponent()
+{
+	return getComponentByTypeInfo(getTypeInfo<T>());
+}
 
 }
 
