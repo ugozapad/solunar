@@ -8,13 +8,15 @@
 namespace solunar
 {
 
+class CameraComponent;
+
 class GameRenderer
 {
 public:
 	void init(GLFWwindow* window);
 	void shutdown();
 
-	void testRender();
+	void testRender(CameraComponent* cameraComponent);
 
 	void renderLevel(Level& level);
 };

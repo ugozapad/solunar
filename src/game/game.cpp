@@ -4,6 +4,9 @@
 #include "enginecore/entity/level.h"
 #include "enginecore/entity/entity.h"
 #include "enginecore/entity/component.h"
+#include "enginecore/entity/componentfactory.h"
+
+#include "game/camera.h"
 
 namespace solunar
 {
@@ -19,8 +22,12 @@ public:
 	void update();
 
 private:
+	void registerComponents();
+
+private:
 	Level* m_level;
 	Entity* m_cameraEntity;
+	CameraComponent* m_cameraComponent;
 };
 
 IGameMain* getGameMain()
@@ -41,6 +48,10 @@ GameMain::~GameMain()
 
 void GameMain::init(GLFWwindow* window)
 {
+	// Register game component
+	registerComponents();
+
+	// Create game renderer
 	g_gameRenderer = new GameRenderer();
 	g_gameRenderer->init(window);
 
@@ -49,10 +60,20 @@ void GameMain::init(GLFWwindow* window)
 
 	// Create camera entity
 	m_cameraEntity = m_level->createEntity();
+
+	// Create camera component
+	m_cameraComponent = m_cameraEntity->createComponent<CameraComponent>();
 }
 
 void GameMain::shutdown()
 {
+	// Delete camera component
+	if (m_cameraComponent)
+	{
+		delete m_cameraComponent;
+		m_cameraComponent = nullptr;
+	}
+
 	// Delete camera entity
 	if (m_cameraEntity)
 	{
@@ -78,6 +99,11 @@ void GameMain::update()
 {
 	// render stuff
 	g_gameRenderer->testRender();
+}
+
+void GameMain::registerComponents()
+{
+	g_componentFactory->registerComponent<CameraComponent>();
 }
 
 }
