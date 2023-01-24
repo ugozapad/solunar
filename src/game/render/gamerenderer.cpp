@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "game/render/gamerenderer.h"
 
 #include "render/core/ibuffer.h"
