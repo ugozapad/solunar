@@ -61,7 +61,7 @@ void GLRenderer::shutdown()
 void GLRenderer::beginFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	//glClearColor(0.5f, 0.5, 0.5f, 1.0f);
+	glClearColor(0.5f, 0.5, 0.5f, 1.0f);
 }
 
 void GLRenderer::endFrame()

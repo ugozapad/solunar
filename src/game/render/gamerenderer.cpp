@@ -1,11 +1,14 @@
 #include <cstring>
 
-#include "game/render/gamerenderer.h"
+#include "core/filesystem/file.h"
+#include "core/filesystem/ifilesystem.h"
+#include "core/filesystem/vfs.h"
 
 #include "render/core/ibuffer.h"
 #include "render/core/ishaderprogram.h"
 #include "render/core/itexture.h"
 
+#include "game/render/gamerenderer.h"
 #include "game/camera.h"
 
 #include <glm/glm.hpp>
@@ -71,19 +74,68 @@ struct GlobalData
 
 // Globals
 IBuffer* g_testVertexBuffer = nullptr;
+IBuffer* g_testIndexBuffer = nullptr;
 IBuffer* g_testConstantBuffer = nullptr;
 IShaderProgram* g_testShaderProg = nullptr;
 GlobalData g_testGlobalData = {};
+
+
+void createShaderProg()
+{
+	IFile* shaderFile = VirtualFileSystem::getInstance()->openFile("/data/shaders/test.glsl");
+	if (!shaderFile) exit(-1);
+
+	shaderFile->seek(0, FileSeek_End);
+	size_t length = shaderFile->tell();
+	shaderFile->seek(0, FileSeek_Begin);
+
+	std::string shaderText;
+	shaderText.resize(length + 1);
+	shaderFile->read((void*)shaderText.data(), length);
+
+	delete shaderFile;
+	shaderFile = nullptr;
+
+	std::string vertexShaderText = "#version 330 core\n";
+	vertexShaderText += "#define VERTEX_SHADER\n";
+	vertexShaderText += shaderText;
+
+	ShaderCreationDesc vertexShaderCD = {};
+	vertexShaderCD.m_shaderType = ShaderType_Vertex;
+	vertexShaderCD.m_bytecode = vertexShaderText.c_str();
+	vertexShaderCD.m_bytecodeLength = vertexShaderText.length();
+
+	std::string pixelShaderText = "#version 330 core\n";
+	pixelShaderText += "#define PIXEL_SHADER\n";
+	pixelShaderText += shaderText;
+
+	ShaderCreationDesc pixelShaderCD = {};
+	pixelShaderCD.m_shaderType = ShaderType_Pixel;
+	pixelShaderCD.m_bytecode = pixelShaderText.c_str();
+	pixelShaderCD.m_bytecodeLength = pixelShaderText.length();
+
+	std::vector<ShaderInputLayout> inputLayouts =
+	{
+		{ InputType_Vec3, "POSITION", 0, 0 },
+		{ InputType_Vec2, "TEXCOORD", 0, 12 },
+	};
+
+	g_testShaderProg = g_renderer->createShaderProgram(vertexShaderCD, pixelShaderCD, inputLayouts);
+}
 
 void gameRendererTestInit()
 {
 	// Vertex data
 	float vertices[] = {
-		// positions        // texture coords
-		 0.5f,  0.5f, 0.0f, 1.0f, 1.0f, // top right
-		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f  // top left 
+		// positions           // texture coords
+		 0.5f,  0.5f, 0.0f,    1.0f, -1.0f, // top right
+		 0.5f, -0.5f, 0.0f,    1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,    0.0f, 0.0f, // bottom left
+		-0.5f,  0.5f, 0.0f,    0.0f, -1.0f  // top left 
+	};
+	unsigned int indices[] = {
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
 	};
 
 	// Create vertex buffer...
@@ -97,6 +149,17 @@ void gameRendererTestInit()
 
 	g_testVertexBuffer = g_renderer->createBuffer(vertexDesc, vertexResource);
 
+	// Create index buffer...
+	BufferDesc indicesBD = {};
+	indicesBD.m_bufferType = BufferType_IndexBuffer;
+	indicesBD.m_bufferAccess = BufferAccess_Default;
+	indicesBD.m_bufferMemorySize = sizeof(indices);
+
+	SubresourceDesc indicesSD = {};
+	indicesSD.m_memory = indices;
+
+	g_testIndexBuffer = g_renderer->createBuffer(indicesBD, indicesSD);
+
 	// Create constant buffer...
 	BufferDesc constantDesc = {};
 	constantDesc.m_bufferType = BufferType_ConstantBuffer;
@@ -107,14 +170,29 @@ void gameRendererTestInit()
 	constantResource.m_memory = &g_testGlobalData;
 
 	g_testConstantBuffer = g_renderer->createBuffer(constantDesc, constantResource);
+
+	// Create shader program...
+	createShaderProg();
 }
 
 void gameRendererTestShutdown()
 {
+	if (g_testShaderProg)
+	{
+		delete g_testShaderProg;
+		g_testShaderProg = nullptr;
+	}
+
 	if (g_testConstantBuffer)
 	{
 		delete g_testConstantBuffer;
 		g_testConstantBuffer = nullptr;
+	}
+
+	if (g_testIndexBuffer)
+	{
+		delete g_testIndexBuffer;
+		g_testIndexBuffer = nullptr;
 	}
 
 	if (g_testVertexBuffer)
@@ -129,6 +207,7 @@ void gameRendererTestRender(CameraComponent* cameraComponent)
 	uint32_t stride = sizeof(float) * 5;
 	uint32_t offset = 0;
 	g_renderer->setVertexBuffer(g_testVertexBuffer, stride, offset);
+	g_renderer->setIndexBuffer(g_testIndexBuffer);
 
 	g_renderer->setPrimitiveMode(PrimitiveMode_TriangleList);
 
@@ -145,7 +224,7 @@ void gameRendererTestRender(CameraComponent* cameraComponent)
 	memcpy(globalDataGPU, &g_testGlobalData, sizeof(g_testGlobalData));
 	g_testConstantBuffer->unmap();
 
-	g_renderer->draw(4, 0);
+	g_renderer->drawIndexed(6, 0, 0);
 }
 
 }
