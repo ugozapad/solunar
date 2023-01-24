@@ -70,7 +70,6 @@ void GameMain::shutdown()
 	// Delete camera component
 	if (m_cameraComponent)
 	{
-		delete m_cameraComponent;
 		m_cameraComponent = nullptr;
 	}
 
@@ -98,7 +97,7 @@ void GameMain::shutdown()
 void GameMain::update()
 {
 	// render stuff
-	g_gameRenderer->testRender();
+	g_gameRenderer->testRender(m_cameraComponent);
 }
 
 void GameMain::registerComponents()

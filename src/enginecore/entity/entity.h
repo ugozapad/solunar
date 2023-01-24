@@ -73,13 +73,13 @@ private:
 template<typename T>
 inline T* Entity::createComponent()
 {
-	return createComponentByTypeInfo(get_type_info<T>());
+	return (T*)createComponentByTypeInfo(get_type_info<T>());
 }
 
 template<typename T>
 inline T* Entity::getComponent()
 {
-	return getComponentByTypeInfo(get_type_info<T>());
+	return (T*)getComponentByTypeInfo(get_type_info<T>());
 }
 
 }

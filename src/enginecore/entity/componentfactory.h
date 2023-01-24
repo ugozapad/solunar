@@ -52,7 +52,7 @@ void ComponentFactory::registerComponent()
 	const TypeInfo* typeInfo = get_type_info<T>();
 
 	// our function
-	CreateComponentFunc_t createComponentFunc = (CreateComponentFunc_t)createComponentTempated<T>();
+	CreateComponentFunc_t createComponentFunc = (CreateComponentFunc_t)createComponentTempated<T>;
 
 	// register component
 	registerComponent(typeInfo, createComponentFunc);

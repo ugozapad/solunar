@@ -24,6 +24,7 @@ Entity::~Entity()
 	for (auto& it : m_components)
 	{
 		it->onEntityRemove();
+		delete it;
 		it = nullptr;
 	}
 
