@@ -17,7 +17,7 @@ public:
 	void* map(BufferMapping mapping) override;
 	void unmap() override;
 
-	void updateSubresource(void* data) override;
+	void updateSubresource(void* data, size_t size) override;
 
 	uint32_t getHandle() { return m_buffer; }
 

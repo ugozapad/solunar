@@ -220,9 +220,7 @@ void gameRendererTestRender(CameraComponent* cameraComponent)
 	g_testGlobalData.projectionMatrix = glm::fmat4(1.0f);
 
 	// push to gpu
-	GlobalData* globalDataGPU = (GlobalData*)g_testConstantBuffer->map(BufferMapping_WriteDiscard);
-	memcpy(globalDataGPU, &g_testGlobalData, sizeof(g_testGlobalData));
-	g_testConstantBuffer->unmap();
+	g_testConstantBuffer->updateSubresource(&g_testGlobalData, sizeof(GlobalData));
 
 	g_renderer->drawIndexed(6, 0, 0);
 }

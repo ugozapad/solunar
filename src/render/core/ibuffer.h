@@ -51,7 +51,7 @@ public:
 	virtual void* map(BufferMapping mapping) = 0;
 	virtual void  unmap() = 0;
 
-	virtual void updateSubresource(void* data) = 0;
+	virtual void updateSubresource(void* data, size_t size) = 0;
 };
 
 }

@@ -41,10 +41,9 @@ void GLBuffer::unmap()
 	glUnmapBuffer(m_target);
 }
 
-void GLBuffer::updateSubresource(void* data)
+void GLBuffer::updateSubresource(void* data, size_t size)
 {
-	//glBufferData(m_target, size, data, isStream ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
-	glBufferSubData(m_target, 0, 0, data);
+	glBufferSubData(m_target, 0, size, data);
 }
 
 }
