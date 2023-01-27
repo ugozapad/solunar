@@ -1,6 +1,7 @@
 #ifndef RENDER_BUFFER_H
 #define RENDER_BUFFER_H
 
+#include <cstddef>
 #include <stdint.h>
 
 namespace solunar
