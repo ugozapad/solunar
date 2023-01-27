@@ -44,8 +44,8 @@ Solunar uses several open-source libraries:
 - GLM (https://github.com/g-truc/glm)
 
 Additional help and inspiration from:
-- 3D Game Engine Architecture, Engineering Real-Time Applications with Wild Magic
-- Real-Time Rendering, Third Edition
+- 3D Game Engine Architecture, Engineering Real-Time Applications with Wild Magic by David Eberly
+- Real-Time Rendering, Third Edition by Tomas Akenine-Moller, Eric Haines, Naty Hoffman
 
 ## License
 
