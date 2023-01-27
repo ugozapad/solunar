@@ -28,9 +28,14 @@ void CameraComponent::onEntityRemove()
 	Component::onEntityRemove();
 }
 
+void CameraComponent::setLookAt(const glm::vec3& targetLocation)
+{
+	m_center = targetLocation;
+}
+
 glm::mat4 CameraComponent::getViewMatrix()
 {
-	return glm::identity<glm::mat4>();
+	return glm::lookAt(m_eye, m_eye + m_center, m_up);
 }
 
 }

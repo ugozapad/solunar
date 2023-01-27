@@ -20,14 +20,16 @@ public:
 	void onEntitySet(Entity* entity) override;
 	void onEntityRemove() override;
 
+	void setLookAt(const glm::vec3& targetLocation);
+
 	glm::mat4 getViewMatrix();
 
 // Properties
 public:
 	// Camera look settings
-	glm::fvec3 m_eye;
-	glm::fvec3 m_center;
-	glm::fvec3 m_up;
+	glm::vec3 m_eye;
+	glm::vec3 m_center;
+	glm::vec3 m_up;
 
 };
 
