@@ -89,6 +89,7 @@ void GameMain::shutdown()
 
 	if (g_gameRenderer)
 	{
+		g_gameRenderer->shutdown();
 		delete g_gameRenderer;
 		g_gameRenderer = nullptr;
 	}
