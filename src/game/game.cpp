@@ -1,15 +1,38 @@
-#include "game/game.h"
-#include "game/render/gamerenderer.h"
+#include <GLFW/glfw3.h>
 
 #include "enginecore/entity/level.h"
 #include "enginecore/entity/entity.h"
 #include "enginecore/entity/component.h"
 #include "enginecore/entity/componentfactory.h"
 
+#include "game/game.h"
+#include "game/render/gamerenderer.h"
 #include "game/camera.h"
 
 namespace solunar
 {
+
+// Input globals
+
+static bool g_keys[460] = {0};
+static float g_mouseX;
+static float g_mouseY;
+static float g_deltaMouseX;
+static float g_deltaMouseY;
+
+void keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	g_keys[key] = action;
+}
+
+void mouseCursorPosCallback(GLFWwindow* window, double x, double y)
+{
+	g_deltaMouseX = (float)x - g_mouseX;
+	g_deltaMouseY = (float)x - g_mouseY;
+
+	g_mouseX = (float)x;
+	g_mouseY = (float)y;
+}
 
 class GameMain : public IGameMain
 {
@@ -25,6 +48,8 @@ private:
 	void registerComponents();
 
 private:
+	GLFWwindow* m_window;
+
 	Level* m_level;
 	Entity* m_cameraEntity;
 	CameraComponent* m_cameraComponent;
@@ -37,8 +62,10 @@ IGameMain* getGameMain()
 }
 
 GameMain::GameMain() :
+	m_window(nullptr),
 	m_level(nullptr),
-	m_cameraEntity(nullptr)
+	m_cameraEntity(nullptr),
+	m_cameraComponent(nullptr)
 {
 }
 
@@ -48,12 +75,18 @@ GameMain::~GameMain()
 
 void GameMain::init(GLFWwindow* window)
 {
+	m_window = window;
+
+	// Set window input callbacks
+	glfwSetKeyCallback(m_window, keyboardCallback);
+	glfwSetCursorPosCallback(m_window, mouseCursorPosCallback);
+
 	// Register game component
 	registerComponents();
 
 	// Create game renderer
 	g_gameRenderer = new GameRenderer();
-	g_gameRenderer->init(window);
+	g_gameRenderer->init(m_window);
 
 	// Create level
 	m_level = new Level();
@@ -93,10 +126,29 @@ void GameMain::shutdown()
 		delete g_gameRenderer;
 		g_gameRenderer = nullptr;
 	}
+
+	m_window = nullptr;
 }
 
 void GameMain::update()
 {
+	if (g_keys[GLFW_KEY_ESCAPE])
+		glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+
+	// update camera
+	float yaw = -90.0f;
+	float pitch = 0.0f;
+
+	yaw += g_mouseX;
+	pitch += g_mouseY;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	m_cameraComponent->setLookAt(glm::vec3(yaw, pitch, 0.0f));
+
 	// render stuff
 	g_gameRenderer->testRender(m_cameraComponent);
 }
