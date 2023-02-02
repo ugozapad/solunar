@@ -13,6 +13,9 @@
 #include "render/core/ishaderprogram.h"
 #include "render/core/itexture.h"
 
+#include "render/core/gl/glrenderer.h"
+#include "render/core/dx11/dx11renderer.h"
+
 #include "render/mesh.h"
 
 #include "game/render/gamerenderer.h"
@@ -36,7 +39,8 @@ void GameRenderer::init(GLFWwindow* window)
 	g_renderWindow = window;
 
 	// create render backend
-	g_renderer = createGLRenderer(window);
+	//g_renderer = createGLRenderer(window);
+	g_renderer = createDX11Renderer(window);
 	g_renderer->init();
 
 	// Create some little test stuff...
@@ -90,10 +94,9 @@ IBuffer* g_testConstantBuffer = nullptr;
 IShaderProgram* g_testShaderProg = nullptr;
 GlobalData g_testGlobalData = {};
 
-
-void createShaderProg()
+void createGLShaderProg()
 {
-	IFile* shaderFile = VirtualFileSystem::getInstance()->openFile("/data/shaders/test.glsl");
+	IFile* shaderFile = VirtualFileSystem::getInstance()->openFile("/data/shaders/gl/test.glsl");
 	if (!shaderFile) exit(-1);
 
 	shaderFile->seek(0, FileSeek_End);
@@ -124,6 +127,42 @@ void createShaderProg()
 	pixelShaderCD.m_shaderType = ShaderType_Pixel;
 	pixelShaderCD.m_bytecode = pixelShaderText.c_str();
 	pixelShaderCD.m_bytecodeLength = pixelShaderText.length();
+
+	std::vector<ShaderInputLayout> inputLayouts =
+	{
+		{ InputType_Vec3, "POSITION", 0, 0 },
+		{ InputType_Vec3, "NORMAL", 0, 12 },
+		{ InputType_Vec2, "TEXCOORD", 0, 24 }
+	};
+
+	g_testShaderProg = g_renderer->createShaderProgram(vertexShaderCD, pixelShaderCD, inputLayouts);
+}
+
+void createDX11ShaderProg()
+{
+	IFile* shaderFile = VirtualFileSystem::getInstance()->openFile("/data/shaders/dx11/test.hlsl");
+	if (!shaderFile) exit(-1);
+
+	shaderFile->seek(0, FileSeek_End);
+	size_t length = shaderFile->tell();
+	shaderFile->seek(0, FileSeek_Begin);
+
+	std::string shaderText;
+	shaderText.resize(length + 1);
+	shaderFile->read((void*)shaderText.data(), length);
+
+	delete shaderFile;
+	shaderFile = nullptr;
+
+	ShaderCreationDesc vertexShaderCD = {};
+	vertexShaderCD.m_shaderType = ShaderType_Vertex;
+	vertexShaderCD.m_bytecode = shaderText.c_str();
+	vertexShaderCD.m_bytecodeLength = shaderText.length();
+
+	ShaderCreationDesc pixelShaderCD = {};
+	pixelShaderCD.m_shaderType = ShaderType_Pixel;
+	pixelShaderCD.m_bytecode = shaderText.c_str();
+	pixelShaderCD.m_bytecodeLength = shaderText.length();
 
 	std::vector<ShaderInputLayout> inputLayouts =
 	{
@@ -175,7 +214,7 @@ void gameRendererTestInit()
 	// Create constant buffer...
 	BufferDesc constantDesc = {};
 	constantDesc.m_bufferType = BufferType_ConstantBuffer;
-	constantDesc.m_bufferAccess = BufferAccess_Dynamic;
+	constantDesc.m_bufferAccess = BufferAccess_Default;
 	constantDesc.m_bufferMemorySize = sizeof(g_testGlobalData);
 
 	SubresourceDesc constantResource = {};
@@ -184,7 +223,12 @@ void gameRendererTestInit()
 	g_testConstantBuffer = g_renderer->createBuffer(constantDesc, constantResource);
 
 	// Create shader program...
-	createShaderProg();
+
+	// #TODO: REMOVE THIS AWFUL HACK
+	if (g_dx11Renderer)
+		createDX11ShaderProg();
+	else
+		createGLShaderProg();
 
 	g_testMesh = new Mesh();
 	g_testMesh->loadObj("data/models/test.obj");

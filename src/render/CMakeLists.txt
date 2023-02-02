@@ -15,15 +15,25 @@ file(GLOB RENDER_CORE_GL_SRC
     "${RENDER_SRC_DIR}/core/gl/*.h"
 )
 
+file(GLOB RENDER_CORE_DX11_SRC
+    "${RENDER_SRC_DIR}/core/dx11/*.cpp"
+    "${RENDER_SRC_DIR}/core/dx11/*.h"
+)
+
 source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_SRC})
 source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_SRC})
 source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_GL_SRC})
+source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_DX11_SRC})
 
 add_library(render STATIC
     ${RENDER_SRC}
     ${RENDER_CORE_SRC}
     ${RENDER_CORE_GL_SRC}
 )
+
+if (MSVC)
+	target_sources(render PRIVATE ${RENDER_CORE_DX11_SRC})
+endif()
 
 target_include_directories(render PRIVATE "${CMAKE_SOURCE_DIR}/src")
 
