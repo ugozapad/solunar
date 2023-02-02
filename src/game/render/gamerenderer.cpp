@@ -13,9 +13,6 @@
 #include "render/core/ishaderprogram.h"
 #include "render/core/itexture.h"
 
-#include "render/core/gl/glrenderer.h"
-#include "render/core/dx11/dx11renderer.h"
-
 #include "render/mesh.h"
 
 #include "game/render/gamerenderer.h"
@@ -225,9 +222,9 @@ void gameRendererTestInit()
 	// Create shader program...
 
 	// #TODO: REMOVE THIS AWFUL HACK
-	if (g_dx11Renderer)
-		createDX11ShaderProg();
-	else
+	//if (g_dx11Renderer)
+	//	createDX11ShaderProg();
+	//else
 		createGLShaderProg();
 
 	g_testMesh = new Mesh();
