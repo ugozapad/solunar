@@ -9,7 +9,7 @@ An open-source 3D graphics engine created to learn how games and engines works
 
 - Custom compile-time reflection system
 - Crossplatform support
-- OpenGL 3.3 Forward renderer (which use direct state access if enabled)
+- OpenGL 3.3 or DirectX 11 Forward renderer (which use direct state access if enabled)
 - Entity Component architecture
 
 ## Requirements
