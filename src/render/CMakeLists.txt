@@ -15,14 +15,16 @@ file(GLOB RENDER_CORE_GL_SRC
     "${RENDER_SRC_DIR}/core/gl/*.h"
 )
 
+source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_SRC})
 source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_SRC})
 source_group(TREE ${RENDER_SRC_DIR} FILES ${RENDER_CORE_GL_SRC})
 
 add_library(render STATIC
+    ${RENDER_SRC}
     ${RENDER_CORE_SRC}
     ${RENDER_CORE_GL_SRC}
 )
 
 target_include_directories(render PRIVATE "${CMAKE_SOURCE_DIR}/src")
 
-target_link_libraries(render glfw glad)
+target_link_libraries(render core glfw glad)

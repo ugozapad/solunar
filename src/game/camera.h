@@ -20,6 +20,7 @@ public:
 	void onEntitySet(Entity* entity) override;
 	void onEntityRemove() override;
 
+	void setEye(const glm::vec3& eyeLocation);
 	void setLookAt(const glm::vec3& targetLocation);
 
 	glm::mat4 getViewMatrix();

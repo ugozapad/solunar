@@ -28,6 +28,11 @@ void CameraComponent::onEntityRemove()
 	Component::onEntityRemove();
 }
 
+void CameraComponent::setEye(const glm::vec3& eyeLocation)
+{
+	m_eye = eyeLocation;
+}
+
 void CameraComponent::setLookAt(const glm::vec3& targetLocation)
 {
 	m_center = targetLocation;

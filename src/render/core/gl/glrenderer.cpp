@@ -60,6 +60,8 @@ void GLRenderer::shutdown()
 
 void GLRenderer::beginFrame()
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearColor(0.5f, 0.5, 0.5f, 1.0f);
 }
@@ -88,18 +90,7 @@ void GLRenderer::setPrimitiveMode(PrimitiveMode primitiveMode)
 
 IBuffer* GLRenderer::createBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& subresourceDesc)
 {
-	switch (bufferDesc.m_bufferType)
-	{
-	case BufferType_VertexBuffer:
-		return new GLBuffer(bufferDesc, subresourceDesc);
-	case BufferType_IndexBuffer:
-		return new GLBuffer(bufferDesc, subresourceDesc);
-	case BufferType_ConstantBuffer:
-		return new GLBuffer(bufferDesc, subresourceDesc);
-	default:
-		break;
-	}
-	return nullptr;
+	return new GLBuffer(bufferDesc, subresourceDesc);
 }
 
 void GLRenderer::setVertexBuffer(IBuffer* buffer, uint32_t stride, uint32_t offset)

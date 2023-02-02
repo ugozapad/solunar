@@ -1,5 +1,10 @@
 #include <cstring>
 
+#include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "core/filesystem/file.h"
 #include "core/filesystem/ifilesystem.h"
 #include "core/filesystem/vfs.h"
@@ -8,10 +13,10 @@
 #include "render/core/ishaderprogram.h"
 #include "render/core/itexture.h"
 
+#include "render/mesh.h"
+
 #include "game/render/gamerenderer.h"
 #include "game/camera.h"
-
-#include <glm/glm.hpp>
 
 namespace solunar
 {
@@ -22,8 +27,14 @@ extern void gameRendererTestRender(CameraComponent* cameraComponent);
 
 GameRenderer* g_gameRenderer = nullptr;
 
+Mesh* g_testMesh = nullptr;
+
+GLFWwindow* g_renderWindow = nullptr;
+
 void GameRenderer::init(GLFWwindow* window)
 {
+	g_renderWindow = window;
+
 	// create render backend
 	g_renderer = createGLRenderer(window);
 	g_renderer->init();
@@ -117,7 +128,8 @@ void createShaderProg()
 	std::vector<ShaderInputLayout> inputLayouts =
 	{
 		{ InputType_Vec3, "POSITION", 0, 0 },
-		{ InputType_Vec2, "TEXCOORD", 0, 12 },
+		{ InputType_Vec3, "NORMAL", 0, 12 },
+		{ InputType_Vec2, "TEXCOORD", 0, 24 }
 	};
 
 	g_testShaderProg = g_renderer->createShaderProgram(vertexShaderCD, pixelShaderCD, inputLayouts);
@@ -173,6 +185,9 @@ void gameRendererTestInit()
 
 	// Create shader program...
 	createShaderProg();
+
+	g_testMesh = new Mesh();
+	g_testMesh->loadObj("data/models/test.obj");
 }
 
 void gameRendererTestShutdown()
@@ -204,25 +219,25 @@ void gameRendererTestShutdown()
 
 void gameRendererTestRender(CameraComponent* cameraComponent)
 {
-	uint32_t stride = sizeof(float) * 5;
-	uint32_t offset = 0;
-	g_renderer->setVertexBuffer(g_testVertexBuffer, stride, offset);
-	g_renderer->setIndexBuffer(g_testIndexBuffer);
-
-	g_renderer->setPrimitiveMode(PrimitiveMode_TriangleList);
-
+	// set shader program and constant buffer
 	g_renderer->setShaderProgram(g_testShaderProg);
 	g_renderer->setConstantBuffer(0, g_testConstantBuffer);
 
-	// update constant buffer
-	g_testGlobalData.modelMatrix = glm::fmat4(1.0f);
-	g_testGlobalData.viewMatrix = glm::fmat4(1.0f);
-	g_testGlobalData.projectionMatrix = glm::fmat4(1.0f);
+	GlobalData globalData = {};
+	globalData.modelMatrix = glm::mat4(1.0f);
+	globalData.viewMatrix = cameraComponent->getViewMatrix();
+
+	int width = 0, height = 0;
+	glfwGetWindowSize(g_renderWindow, &width, &height);
+
+	float aspect = (float)width / (float)height;
+	globalData.projectionMatrix = glm::perspective(glm::radians(70.0f), aspect, 0.1f, 100.0f);
 
 	// push to gpu
-	g_testConstantBuffer->updateSubresource(&g_testGlobalData, sizeof(GlobalData));
+	g_testConstantBuffer->updateSubresource(&globalData, sizeof(globalData));
 
-	g_renderer->drawIndexed(6, 0, 0);
+	// draw test mesh
+	g_testMesh->draw();
 }
 
 }
