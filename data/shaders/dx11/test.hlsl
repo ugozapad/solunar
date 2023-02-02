@@ -2,9 +2,9 @@
 
 cbuffer GlobalData : register(b0)
 {
-	float4x4 g_modelMatrix;
-	float4x4 g_viewMatrix;
-	float4x4 g_projectionMatrix;
+	row_major float4x4 g_modelMatrix;
+	row_major float4x4 g_viewMatrix;
+	row_major float4x4 g_projectionMatrix;
 }
 
 struct VS_INPUT

@@ -39,8 +39,8 @@ void GameRenderer::init(GLFWwindow* window)
 	g_renderWindow = window;
 
 	// create render backend
-	//g_renderer = createGLRenderer(window);
-	g_renderer = createDX11Renderer(window);
+	g_renderer = createGLRenderer(window);
+	//g_renderer = createDX11Renderer(window);
 	g_renderer->init();
 
 	// Create some little test stuff...

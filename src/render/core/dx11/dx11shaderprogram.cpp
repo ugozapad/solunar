@@ -68,7 +68,7 @@ DX11ShaderProgram::DX11ShaderProgram(const char* vstext, const char* pstext, con
 	createInputLayout(vertexShaderBlob, inputLayouts);
 
 	// save bytecode
-	debugSaveBytecode(vertexShaderBlob);
+	//debugSaveBytecode(vertexShaderBlob);
 
 	vertexShaderBlob->Release();
 	vertexShaderBlob = nullptr;
