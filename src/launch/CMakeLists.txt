@@ -11,3 +11,8 @@ target_include_directories(launch PRIVATE "${CMAKE_SOURCE_DIR}/src")
 target_include_directories(launch PRIVATE "${CMAKE_SOURCE_DIR}/external/stb")
 
 target_link_libraries(launch glfw core render enginecore game)
+
+if (APPLE)
+    set_target_properties(launch PROPERTIES XCODE_GENERATE_SCHEME TRUE)
+    set_target_properties(launch PROPERTIES XCODE_SCHEME_WORKING_DIRECTORY "${SOLUNAR_ROOT}/")
+endif()
