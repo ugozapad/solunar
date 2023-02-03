@@ -112,7 +112,8 @@ void Mesh::loadObj(const std::string& filename)
 		glm::fvec3 normal = glm::fvec3(0.0f);
 		glm::fvec2 uv = glm::fvec3(0.0f);
 
-		finalVertices.push_back(MeshVertex{ vertex, normal, uv });
+		MeshVertex tempVertex = { vertex, normal, uv };
+		finalVertices.push_back(tempVertex);
 	}
 
 	// create mesh

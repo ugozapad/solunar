@@ -3,6 +3,6 @@
 namespace solunar
 {
 
-IShaderManager* g_shaderManager = nullptr;
+IShaderManager* g_shaderManager = 0;
 
 }

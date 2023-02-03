@@ -8,7 +8,7 @@
 #include <Windows.h>
 
 #include "core/filesystem/filesystem_win32.h"
-#elif defined(__unix__)
+#else
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	GetCurrentDirectoryA(MAX_PATH, currentDirectory);
 
 	g_fileSystem = new FileSystemWin32(currentDirectory);
-#elif defined(__unix__)
+#else
 	char cwd[PATH_MAX];
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		return -1; // failed to get current working directory

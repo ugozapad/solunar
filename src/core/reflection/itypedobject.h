@@ -42,7 +42,7 @@ inline T* dynamicCast(const ITypedObject* typedObject)
 template <typename T>
 inline const T* dynamicCast(const ITypedObject* typedObject)
 {
-	return typedObject && typedObject->isKindOf<T> ? (T*)typedObject : nullptr;
+	return typedObject && typedObject->isKindOf<T>() ? (T*)typedObject : nullptr;
 }
 
 template <typename T>
