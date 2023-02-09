@@ -36,8 +36,13 @@ void GameRenderer::init(GLFWwindow* window)
 	g_renderWindow = window;
 
 	// create render backend
+	// #TODO: Proper selection of renderer, for Windows only DX11
+#ifdef WIN32
+	g_renderer = createDX11Renderer(window);
+#else
 	g_renderer = createGLRenderer(window);
-	//g_renderer = createDX11Renderer(window);
+#endif // WIN32
+
 	g_renderer->init();
 
 	// Create some little test stuff...
@@ -222,10 +227,11 @@ void gameRendererTestInit()
 	// Create shader program...
 
 	// #TODO: REMOVE THIS AWFUL HACK
-	//if (g_dx11Renderer)
-	//	createDX11ShaderProg();
-	//else
-		createGLShaderProg();
+#ifdef WIN32
+	createDX11ShaderProg();
+#else
+	createGLShaderProg();
+#endif // WIN32 
 
 	g_testMesh = new Mesh();
 	g_testMesh->loadObj("data/models/test.obj");
@@ -233,6 +239,12 @@ void gameRendererTestInit()
 
 void gameRendererTestShutdown()
 {
+	if (g_testMesh)
+	{
+		delete g_testMesh;
+		g_testMesh = nullptr;
+	}
+
 	if (g_testShaderProg)
 	{
 		delete g_testShaderProg;

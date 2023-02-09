@@ -24,6 +24,17 @@ Mesh::Mesh() :
 
 Mesh::~Mesh()
 {
+	if (m_indexBuffer)
+	{
+		delete m_indexBuffer;
+		m_indexBuffer = nullptr;
+	}
+
+	if (m_vertexBuffer)
+	{
+		delete m_vertexBuffer;
+		m_vertexBuffer = nullptr;
+	}
 }
 
 void Mesh::loadObj(const std::string& filename)
