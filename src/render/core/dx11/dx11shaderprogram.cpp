@@ -170,25 +170,4 @@ void DX11ShaderProgram::createInputLayout(ID3DBlob* vertexShaderBlob, const std:
 	shaderReflection->Release();
 }
 
-void DX11ShaderProgram::setTextureSampler(int slot, const char * name)
-{
-	DebugBreak();
-}
-
-void DX11ShaderProgram::setInteger(int slot, int value)
-{
-	DebugBreak();
-}
-
-void DX11ShaderProgram::setFloat(int slot, float value)
-{
-	DebugBreak();
-}
-
-uint32_t DX11ShaderProgram::getUniformLocation(const char * uniform_name)
-{
-	DebugBreak();
-	return -1;
-}
-
 }

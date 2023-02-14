@@ -26,12 +26,6 @@ private:
 	ID3D11VertexShader* m_vertexShader;
 	ID3D11PixelShader* m_pixelShader;
 
-	virtual void setTextureSampler(int slot, const char * name) override;
-	virtual void setInteger(int slot, int value) override;
-	virtual void setFloat(int slot, float value) override;
-
-	virtual uint32_t getUniformLocation(const char * uniform_name) override;
-
 };
 
 }

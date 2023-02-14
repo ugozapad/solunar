@@ -55,36 +55,4 @@ GLShaderProgram::~GLShaderProgram()
 	glDeleteProgram(m_program);
 }
 
-//////////////////////////////////////////////////////////////////////////
-void GLShaderProgram::setTextureSampler(int slot, const char* name)
-{
-	glUniform1i(getUniformLocation(name), slot);
-}
-
-void GLShaderProgram::setInteger(int slot, int value)
-{
-	glUniform1i(slot, value);
-}
-
-void GLShaderProgram::setFloat(int slot, float value)
-{
-	glUniform1f(slot, value);
-}
-
-//void ShaderProgram::setVector3(int slot, const glm::vec3& vector)
-//{
-//	glUniform3fv(slot, 1, glm::value_ptr(vector));
-//}
-//
-//void ShaderProgram::setMatrix4(int slot, const glm::mat4& matrix)
-//{
-//	glUniformMatrix4fv(slot, 1, GL_FALSE, glm::value_ptr(matrix));
-//}
-//////////////////////////////////////////////////////////////////////////
-
-uint32_t GLShaderProgram::getUniformLocation(const char* uniform_name)
-{
-	return glGetUniformLocation(m_program, uniform_name);
-}
-
 }
