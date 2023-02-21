@@ -48,6 +48,9 @@ public:
 
 	virtual ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) = 0;
 	virtual void setTexture2D(uint32_t slot, ITexture2D* texture) = 0;
+
+	virtual ISamplerState* createSamplerState(const SamplerDesc& samplerDesc) = 0;
+	virtual void setSamplerState(int slot, ISamplerState* samplerState) = 0;
 };
 
 extern IRenderer* g_renderer;

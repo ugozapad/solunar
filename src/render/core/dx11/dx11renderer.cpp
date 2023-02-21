@@ -15,6 +15,7 @@
 #include "render/core/dx11/dx11profiler.h"
 #include "render/core/dx11/dx11shadermanager.h"
 #include "render/core/dx11/dx11shaderprogram.h"
+#include "render/core/dx11/dx11samplerstate.h"
 
 #include "d3dcompiler.h"
 #include <d3d9.h>
@@ -259,6 +260,25 @@ void DX11Renderer::setTexture2D(uint32_t slot, ITexture2D* texture)
 	else
 	{
 		m_deviceContext->PSSetShaderResources(0, 0, nullptr);
+	}
+}
+
+ISamplerState* DX11Renderer::createSamplerState(const SamplerDesc& samplerDesc)
+{
+	return new DX11SamplerState(samplerDesc);
+}
+
+void DX11Renderer::setSamplerState(int slot, ISamplerState* samplerState)
+{
+	DX11SamplerState* nativeSampler = (DX11SamplerState*)samplerState;
+	if (nativeSampler && nativeSampler->getSamplerState())
+	{
+		ID3D11SamplerState* dx11SamlplerState = nativeSampler->getSamplerState();
+		m_deviceContext->PSSetSamplers(slot, 1, &dx11SamlplerState);
+	}
+	else
+	{
+		m_deviceContext->PSSetSamplers(slot, 0, nullptr);
 	}
 }
 

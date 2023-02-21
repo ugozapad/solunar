@@ -35,6 +35,9 @@ public:
 	ITexture2D* createTexture2D(const TextureDesc& textureDesc, const SubresourceDesc& subresourceDesc) override;
 	void setTexture2D(uint32_t slot, ITexture2D* texture) override;
 
+	ISamplerState* createSamplerState(const SamplerDesc& samplerDesc) override;
+	void setSamplerState(int slot, ISamplerState* samplerState) override;
+
 public:
 	ID3D11Device* getDevice() { return m_device; }
 	ID3D11DeviceContext* getDeviceContext() { return m_deviceContext; }

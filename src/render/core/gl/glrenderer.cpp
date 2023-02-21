@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "render/core/gl/glrenderer.h"
 #include "render/core/gl/glbuffer.h"
@@ -152,6 +153,17 @@ void GLRenderer::setTexture2D(uint32_t slot, ITexture2D* texture)
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+}
+
+ISamplerState* GLRenderer::createSamplerState(const SamplerDesc& samplerDesc)
+{
+	assert(true);
+	return nullptr;
+}
+
+void GLRenderer::setSamplerState(int slot, ISamplerState* samplerState)
+{
+	assert(true);
 }
 
 void GLRenderer::initRenderFeatures()
