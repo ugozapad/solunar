@@ -65,19 +65,29 @@ int main(int argc, char* argv[])
 	// Initialize engine
 	Engine::instance()->init();
 
+	// Create game instance
+	g_gameMain = new GameMain();
+
 	// Initialize game
-	getGameMain()->init(window);
+	g_gameMain->init(window);
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
 		
 		// Update game
-		getGameMain()->update();
+		g_gameMain->update();
 	}
 
+	// Shutdown game
+	g_gameMain->shutdown();
+
 	// Delete game
-	getGameMain()->shutdown();
+	if (g_gameMain)
+	{
+		delete g_gameMain;
+		g_gameMain = nullptr;
+	}
 
 	// Shutdown engine
 	Engine::instance()->shutdown();

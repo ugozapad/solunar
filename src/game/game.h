@@ -6,15 +6,33 @@ struct GLFWwindow;
 namespace solunar
 {
 
-class IGameMain
+// Forward declaration
+class Level;
+class Entity;
+class CameraComponent;
+
+class GameMain
 {
 public:
-	virtual void init(GLFWwindow* window) = 0;
-	virtual void shutdown() = 0;
-	virtual void update() = 0;
+	GameMain();
+	~GameMain();
+
+	void init(GLFWwindow* window);
+	void shutdown();
+	void update();
+
+private:
+	void registerComponents();
+
+private:
+	GLFWwindow* m_window;
+
+	Level* m_level;
+	Entity* m_cameraEntity;
+	CameraComponent* m_cameraComponent;
 };
 
-IGameMain* getGameMain();
+extern GameMain* g_gameMain;
 
 }
 

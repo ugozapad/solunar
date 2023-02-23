@@ -12,6 +12,9 @@
 namespace solunar
 {
 
+// Global instance
+GameMain* g_gameMain = nullptr;
+
 // Input globals
 
 static bool g_keys[460] = {0};
@@ -32,33 +35,6 @@ void mouseCursorPosCallback(GLFWwindow* window, double x, double y)
 
 	g_mouseX = (float)x;
 	g_mouseY = (float)y;
-}
-
-class GameMain : public IGameMain
-{
-public:
-	GameMain();
-	~GameMain();
-
-	void init(GLFWwindow* window);
-	void shutdown();
-	void update();
-
-private:
-	void registerComponents();
-
-private:
-	GLFWwindow* m_window;
-
-	Level* m_level;
-	Entity* m_cameraEntity;
-	CameraComponent* m_cameraComponent;
-};
-
-IGameMain* getGameMain()
-{
-	static GameMain s_gameMain;
-	return &s_gameMain;
 }
 
 GameMain::GameMain() :
