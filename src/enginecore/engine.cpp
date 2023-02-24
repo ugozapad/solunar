@@ -4,16 +4,14 @@
 namespace solunar
 {
 
-// Global instance
-Engine g_engine;
-
 // Singleton
-Engine* Engine::instance()
+Engine* Engine::getInstance()
 {
-	return &g_engine;
+	static Engine engine;
+	return &engine;
 }
 
-void Engine::init(/*IGameMain* gameMain*/)
+void Engine::init()
 {
 	// Create component factory
 	g_componentFactory = new ComponentFactory();

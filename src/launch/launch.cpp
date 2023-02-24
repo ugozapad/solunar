@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 		return -1;
 
 	// Initialize engine
-	Engine::instance()->init();
+	Engine::getInstance()->init();
 
 	// Create game instance
 	g_gameMain = new GameMain();
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 	}
 
 	// Shutdown engine
-	Engine::instance()->shutdown();
+	Engine::getInstance()->shutdown();
 
 	// Delete filesystem
 	delete g_fileSystem;

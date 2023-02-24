@@ -4,17 +4,14 @@
 namespace solunar
 {
 
-// Forward declaration
-class IGameMain;
-
 class Engine
 {
 public:
 	//! Singleton
-	static Engine* instance();
+	static Engine* getInstance();
 
 public:
-	void init(/*IGameMain* gameMain*/);
+	void init();
 	void shutdown();
 };
 

@@ -8,8 +8,8 @@ namespace solunar
 
 VirtualFileSystem* VirtualFileSystem::getInstance()
 {
-	static VirtualFileSystem instance;
-	return &instance;
+	static VirtualFileSystem getInstance;
+	return &getInstance;
 }
 
 void VirtualFileSystem::mount(const MountPointDesc& mountDesc)
