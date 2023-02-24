@@ -9,7 +9,7 @@ An open-source 3D graphics engine created to learn how games and engines works
 
 - Custom compile-time reflection system
 - Crossplatform support
-- OpenGL 3.3 or DirectX 11 Forward renderer (which use direct state access if enabled)
+- OpenGL 3.3 or DirectX 11 Forward renderer
 - Entity Component architecture
 
 ## Requirements
@@ -25,7 +25,7 @@ An open-source 3D graphics engine created to learn how games and engines works
   git clone https://github.com/ugozapad/solunar.git --recursive
   ```
 
-- Generate projects or build scripts
+- Generate projects or build scripts (for example generate projects for Visual Studio 2022)
 
   ```shell
   cmake -B build -G "Visual Studio 17 2022"
