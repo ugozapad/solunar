@@ -57,6 +57,7 @@ extern IRenderer* g_renderer;
 
 IRenderer* createGLRenderer(GLFWwindow* window);
 IRenderer* createDX11Renderer(GLFWwindow* window);
+IRenderer* createVulkanRenderer(GLFWwindow* window);
 
 }
 

@@ -35,6 +35,8 @@ void GameRenderer::init(GLFWwindow* window)
 {
 	g_renderWindow = window;
 
+	createVulkanRenderer(window);
+	
 	// create render backend
 	// #TODO: Proper selection of renderer, for Windows only DX11
 #ifdef WIN32
