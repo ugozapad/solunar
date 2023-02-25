@@ -10,6 +10,7 @@
 #include "render/core/gl/glshadermanager.h"
 #include "render/core/gl/glshaderprogram.h"
 #include "render/core/gl/gltexture2d.h"
+#include "render/core/gl/glsamplerstate.h"
 
 namespace solunar
 {
@@ -157,13 +158,13 @@ void GLRenderer::setTexture2D(uint32_t slot, ITexture2D* texture)
 
 ISamplerState* GLRenderer::createSamplerState(const SamplerDesc& samplerDesc)
 {
-	assert(true);
-	return nullptr;
+	return new GLSamplerState(samplerDesc);
 }
 
 void GLRenderer::setSamplerState(int slot, ISamplerState* samplerState)
 {
-	assert(true);
+	GLSamplerState* samplerImpl = (GLSamplerState*)samplerState;
+	glBindSampler(slot, samplerImpl ? samplerImpl->getHandle() : 0);
 }
 
 void GLRenderer::initRenderFeatures()
