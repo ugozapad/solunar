@@ -44,6 +44,7 @@ Solunar uses several open-source libraries:
 - [GLFW](https://github.com/glfw/glfw)
 - [GLAD](https://github.com/Dav1dde/glad)
 - [GLM](https://github.com/g-truc/glm)
+- [STB](https://github.com/nothings/stb)
 
 Additional help and inspiration from:
 
