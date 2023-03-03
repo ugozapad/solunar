@@ -13,7 +13,8 @@ namespace solunar
 VulkanRenderer* g_vulkanRenderer = nullptr;
 
 VulkanRenderer::VulkanRenderer(GLFWwindow* window) :
-    m_vulkanInstance(nullptr)
+    m_vulkanInstance(nullptr),
+	m_vulkanDevice(nullptr)
 {
 	g_vulkanRenderer = this;
 
@@ -39,7 +40,8 @@ void VulkanRenderer::init()
 	VulkanPhysicalDevice::getInstance()->findQueueFamily();
 
 	// Create vulkan device
-	VulkanDevice::getInstance()->create();
+	m_vulkanDevice = new VulkanDevice();
+	m_vulkanDevice->create();
 
 	// create render surface
 	createSurface();
@@ -83,7 +85,13 @@ void VulkanRenderer::initValidationLayer()
 void VulkanRenderer::shutdown()
 {
 	// Release vulkan device
-	VulkanDevice::getInstance()->release();
+	if (m_vulkanDevice)
+	{
+		m_vulkanDevice->release();
+
+		delete m_vulkanDevice;
+		m_vulkanDevice = nullptr;
+	}
 
 	destroySurface();
 

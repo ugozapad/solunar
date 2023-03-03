@@ -5,12 +5,6 @@
 namespace solunar
 {
 
-VulkanDevice* VulkanDevice::getInstance()
-{
-	static VulkanDevice instance;
-	return &instance;
-}
-
 VulkanDevice::VulkanDevice()
 {
 }

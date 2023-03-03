@@ -9,9 +9,6 @@ namespace solunar
 class VulkanDevice
 {
 public:
-	static VulkanDevice* getInstance();
-
-public:
 	VulkanDevice();
 	~VulkanDevice();
 

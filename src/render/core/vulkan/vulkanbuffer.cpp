@@ -35,7 +35,7 @@ VulkanBuffer::VulkanBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& 
 	createInfo.usage = getVulkanBufferUsage(bufferDesc);
 	createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-	if (vkCreateBuffer(VulkanDevice::getInstance()->getDevice(), &createInfo, nullptr, &m_buffer) != VK_SUCCESS)
+	if (vkCreateBuffer(g_vulkanRenderer->getVulkanDevice()->getDevice(), &createInfo, nullptr, &m_buffer) != VK_SUCCESS)
 	{
 		printf("failed to create buffer\n");
 	}
@@ -43,20 +43,20 @@ VulkanBuffer::VulkanBuffer(const BufferDesc& bufferDesc, const SubresourceDesc& 
 
 VulkanBuffer::~VulkanBuffer()
 {
-	vkDestroyBuffer(VulkanDevice::getInstance()->getDevice(), m_buffer, nullptr);
+	vkDestroyBuffer(g_vulkanRenderer->getVulkanDevice()->getDevice(), m_buffer, nullptr);
 }
 
 void* VulkanBuffer::map(BufferMapping mapping)
 {
 	void* data;
-	vkMapMemory(VulkanDevice::getInstance()->getDevice(), nullptr, 0, m_bufferDesc.m_bufferMemorySize, 0, &data);
+	vkMapMemory(g_vulkanRenderer->getVulkanDevice()->getDevice(), nullptr, 0, m_bufferDesc.m_bufferMemorySize, 0, &data);
 
 	return data;
 }
 
 void VulkanBuffer::unmap()
 {
-	vkUnmapMemory(VulkanDevice::getInstance()->getDevice(), nullptr);
+	vkUnmapMemory(g_vulkanRenderer->getVulkanDevice()->getDevice(), nullptr);
 }
 
 void VulkanBuffer::updateSubresource(void* data, size_t size)

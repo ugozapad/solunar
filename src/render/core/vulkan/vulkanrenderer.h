@@ -8,6 +8,8 @@
 namespace solunar
 {
 
+class VulkanDevice;
+
 class VulkanRenderer : public IRenderer
 {
 public:
@@ -48,7 +50,7 @@ public:
 
 	VkInstance getVulkanInstance() { return m_vulkanInstance; }
 
-	//VulkanDevice* getVulkanDevice() { return &m_vulkanDevice; }
+	VulkanDevice* getVulkanDevice() { return m_vulkanDevice; }
 
 private:
 	GLFWwindow* m_renderWindow;
@@ -56,7 +58,7 @@ private:
 	VkInstance m_vulkanInstance;
 	VkSurfaceKHR m_renderSurface;
 
-	//VulkanDevice m_vulkanDevice;
+	VulkanDevice* m_vulkanDevice;
 };
 
 extern VulkanRenderer* g_vulkanRenderer;
