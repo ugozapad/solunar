@@ -3,6 +3,7 @@
 
 #include "render/core/irenderer.h"
 
+#define VK_USE_PLATFORM_WIN32_KHR
 #include <vulkan/vulkan.h>
 
 namespace solunar
@@ -16,6 +17,7 @@ public:
 
 	void init() override;
 	void initInstance();
+	void initValidationLayer();
 
 	void shutdown() override;
 
@@ -40,9 +42,25 @@ public:
 	ISamplerState* createSamplerState(const SamplerDesc& samplerDesc) override;
 	void setSamplerState(int slot, ISamplerState* samplerState) override;
 
+	//////////////////////////////////////////////////////////////////////////
+	// Vulkan render specific
+	void createSurface();
+	void destroySurface();
+
+	VkInstance getVulkanInstance() { return m_vulkanInstance; }
+
+	//VulkanDevice* getVulkanDevice() { return &m_vulkanDevice; }
+
 private:
+	GLFWwindow* m_renderWindow;
+
 	VkInstance m_vulkanInstance;
+	VkSurfaceKHR m_renderSurface;
+
+	//VulkanDevice m_vulkanDevice;
 };
+
+extern VulkanRenderer* g_vulkanRenderer;
 
 }
 

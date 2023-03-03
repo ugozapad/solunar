@@ -1,23 +1,48 @@
 #include "render/core/vulkan/vulkanrenderer.h"
+#include "render/core/vulkan/vulkanphysicaldevice.h"
+#include "render/core/vulkan/vulkandevice.h"
 
-#include <GLFW/glfw3.h>
+#include <glfw/glfw3.h>
+
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
 
 namespace solunar
 {
 
+VulkanRenderer* g_vulkanRenderer = nullptr;
+
 VulkanRenderer::VulkanRenderer(GLFWwindow* window) :
     m_vulkanInstance(nullptr)
 {
+	g_vulkanRenderer = this;
+
+	m_renderWindow = window;
 }
 
 VulkanRenderer::~VulkanRenderer()
 {
+	m_renderWindow = nullptr;
+
+	g_vulkanRenderer = nullptr;
 }
 
 void VulkanRenderer::init()
 {
     // Initialize vulkan instance
     initInstance();
+
+	// Pick physical device
+	VulkanPhysicalDevice::getInstance()->enumerateDevice();
+
+	// Find family queue
+	VulkanPhysicalDevice::getInstance()->findQueueFamily();
+
+	// Create vulkan device
+	VulkanDevice::getInstance()->create();
+
+	// create render surface
+	createSurface();
 }
 
 void VulkanRenderer::initInstance()
@@ -34,7 +59,7 @@ void VulkanRenderer::initInstance()
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &applicationInfo;
 
-    // procced vulkan extensions
+    // proceed vulkan extensions
     uint32_t extensionCount = 0;
     const char** extensions = glfwGetRequiredInstanceExtensions(&extensionCount);
 
@@ -49,8 +74,19 @@ void VulkanRenderer::initInstance()
     }
 }
 
+void VulkanRenderer::initValidationLayer()
+{
+	const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };
+
+}
+
 void VulkanRenderer::shutdown()
 {
+	// Release vulkan device
+	VulkanDevice::getInstance()->release();
+
+	destroySurface();
+
     if (m_vulkanInstance)
     {
         vkDestroyInstance(m_vulkanInstance, nullptr);
@@ -120,6 +156,27 @@ ISamplerState* VulkanRenderer::createSamplerState(const SamplerDesc& samplerDesc
 
 void VulkanRenderer::setSamplerState(int slot, ISamplerState* samplerState)
 {
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Vulkan render specific
+
+void VulkanRenderer::createSurface()
+{
+	VkWin32SurfaceCreateInfoKHR surfaceCreateInfo = {};
+	surfaceCreateInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+	surfaceCreateInfo.hwnd = glfwGetWin32Window(m_renderWindow);
+	surfaceCreateInfo.hinstance = GetModuleHandle(nullptr);
+
+	if (vkCreateWin32SurfaceKHR(m_vulkanInstance, &surfaceCreateInfo, nullptr, &m_renderSurface) != VK_SUCCESS)
+	{
+		printf("failed to create window surface\n");
+	}
+}
+
+void VulkanRenderer::destroySurface()
+{
+	vkDestroySurfaceKHR(m_vulkanInstance, m_renderSurface, nullptr);
 }
 
 IRenderer* createVulkanRenderer(GLFWwindow* window)

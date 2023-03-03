@@ -38,13 +38,15 @@ void GameRenderer::init(GLFWwindow* window)
 	createVulkanRenderer(window);
 	
 	// create render backend
-	// #TODO: Proper selection of renderer, for Windows only DX11
-#ifdef WIN32
-	g_renderer = createDX11Renderer(window);
-#else
-	g_renderer = createGLRenderer(window);
-#endif // WIN32
+	g_renderer = createVulkanRenderer(window);
 
+//	// #TODO: Proper selection of renderer, for Windows only DX11
+//#ifdef WIN32
+//	g_renderer = createDX11Renderer(window);
+//#else
+//	g_renderer = createGLRenderer(window);
+//#endif // WIN32
+//
 	g_renderer->init();
 
 	// Create some little test stuff...
@@ -227,13 +229,14 @@ void gameRendererTestInit()
 	g_testConstantBuffer = g_renderer->createBuffer(constantDesc, constantResource);
 
 	// Create shader program...
+	createGLShaderProg();
 
 	// #TODO: REMOVE THIS AWFUL HACK
-#ifdef WIN32
-	createDX11ShaderProg();
-#else
-	createGLShaderProg();
-#endif // WIN32 
+//#ifdef WIN32
+//	createDX11ShaderProg();
+//#else
+//	createGLShaderProg();
+//#endif // WIN32 
 
 	g_testMesh = new Mesh();
 	g_testMesh->loadObj("data/models/test.obj");
@@ -289,7 +292,7 @@ void gameRendererTestRender(CameraComponent* cameraComponent)
 	globalData.projectionMatrix = glm::perspective(glm::radians(70.0f), aspect, 0.1f, 100.0f);
 
 	// push to gpu
-	g_testConstantBuffer->updateSubresource(&globalData, sizeof(globalData));
+	//g_testConstantBuffer->updateSubresource(&globalData, sizeof(globalData));
 
 	// draw test mesh
 	g_testMesh->draw();
