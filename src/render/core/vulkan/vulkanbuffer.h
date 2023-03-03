@@ -3,7 +3,7 @@
 
 #include "render/core/ibuffer.h"
 
-#include <vulkan/vulkan.h>
+#include "render/core/vulkan/vulkanshared.h"
 
 namespace solunar
 {

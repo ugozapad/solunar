@@ -1,7 +1,7 @@
 #ifndef RENDER_CORE_VULKAN_VULKANPHYSICALDEVICE_H
 #define RENDER_CORE_VULKAN_VULKANPHYSICALDEVICE_H
 
-#include <vulkan/vulkan.h>
+#include "render/core/vulkan/vulkanshared.h"
 
 namespace solunar
 {
